@@ -8,7 +8,7 @@ export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl overflow-y-auto animate-fade-in" role="dialog" aria-modal="true" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="relative w-full max-w-xl bg-[#0D1B2A] border-2 border-[#F79D1B]/50 rounded-3xl overflow-hidden shadow-[0_20px_70px_rgba(0,0,0,0.9)] my-6" ref={dialogRef} tabIndex={-1}>
+      <div className="relative w-full max-w-xl bg-blekk border-2 border-sol/50 rounded-2xl overflow-hidden shadow-[0_20px_70px_rgba(0,0,0,0.9)] my-6" ref={dialogRef} tabIndex={-1}>
         {/* Close Button */}
         <button
           onClick={onClose} aria-label="Lukk" data-close
@@ -27,23 +27,23 @@ export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted 
               e.target.src = '/assets/kassholmen-seagull.jpg';
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A] via-[#0D1B2A]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-blekk via-blekk/40 to-transparent" />
 
           {/* Badges on image */}
           <div className="absolute top-4 left-4 flex gap-2">
-            <span className="px-3 py-1 rounded-full bg-[#F79D1B] text-[#0D1B2A] text-xs font-bold uppercase tracking-wider shadow-md">
+            <span className="px-3 py-1 rounded-full bg-sol text-blekk text-xs font-bold uppercase tracking-wider shadow-md">
               {artist.tag || 'Artistforslag'}
             </span>
-            <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[#6EC1C6] text-xs font-bold uppercase tracking-wider border border-white/10">
+            <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-sjo text-xs font-bold uppercase tracking-wider border border-white/10">
               {artist.status}
             </span>
           </div>
 
           <div className="absolute bottom-4 left-6 right-6">
-            <h3 className="font-['Oswald'] text-3xl sm:text-4xl font-bold uppercase tracking-wide text-white drop-shadow-md">
+            <h3 className="font-display text-3xl sm:text-4xl font-bold uppercase tracking-wide text-white drop-shadow-md">
               {artist.name}
             </h3>
-            <span className="text-xs uppercase font-bold tracking-widest text-[#F79D1B]">
+            <span className="text-xs uppercase font-bold tracking-widest text-sol">
               {artist.genre}
             </span>
           </div>
@@ -53,10 +53,10 @@ export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted 
         <div className="p-6 sm:p-8 space-y-6 text-left">
           {/* Bio / Facts */}
           <div>
-            <h4 className="font-['Oswald'] text-sm font-bold uppercase tracking-wider text-[#6EC1C6] mb-2">
+            <h4 className="font-display text-sm font-bold uppercase tracking-wider text-sjo mb-2">
               Om artisten & hvorfor de passer på Kassholmen
             </h4>
-            <p className="text-xs sm:text-sm text-[#F3E9D2]/85 leading-relaxed font-light">
+            <p className="text-xs sm:text-sm text-papir/85 leading-relaxed">
               {artist.facts || artist.desc}
             </p>
           </div>
@@ -66,18 +66,18 @@ export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               {artist.background && (
                 <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                  <span className="font-bold text-[#F79D1B] uppercase tracking-wider text-[10px] block mb-1">
+                  <span className="font-bold text-sol uppercase tracking-wider text-[10px] block mb-1">
                     Bakgrunn
                   </span>
-                  <p className="text-white/80 font-light">{artist.background}</p>
+                  <p className="text-white/80">{artist.background}</p>
                 </div>
               )}
               {artist.musicStyle && (
                 <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                  <span className="font-bold text-[#6EC1C6] uppercase tracking-wider text-[10px] block mb-1">
+                  <span className="font-bold text-sjo uppercase tracking-wider text-[10px] block mb-1">
                     Musikkstil & uttrykk
                   </span>
-                  <p className="text-white/80 font-light">{artist.musicStyle}</p>
+                  <p className="text-white/80">{artist.musicStyle}</p>
                 </div>
               )}
             </div>
@@ -85,13 +85,13 @@ export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted 
 
           {/* Mental Health Engagement Highlight */}
           {artist.mentalHealth && (
-            <div className="p-4 rounded-2xl bg-[#1E6070]/30 border border-[#6EC1C6]/40 flex items-start gap-3">
-              <Sparkles className="w-5 h-5 text-[#F79D1B] shrink-0 mt-0.5" />
+            <div className="p-4 rounded-2xl bg-fjord/30 border border-sjo/40 flex items-start gap-3">
+              <Sparkles className="w-5 h-5 text-sol shrink-0 mt-0.5" />
               <div>
-                <span className="text-[11px] uppercase font-bold text-[#F79D1B] block mb-1">
+                <span className="text-[11px] uppercase font-bold text-sol block mb-1">
                   Psykisk helse-engasjement & åpenhet
                 </span>
-                <p className="text-xs text-[#F3E9D2]/90 leading-relaxed font-light">
+                <p className="text-xs text-papir/90 leading-relaxed">
                   {artist.mentalHealth}
                 </p>
               </div>
@@ -101,7 +101,7 @@ export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted 
           {/* Known Hits */}
           {artist.hits && (
             <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-              <span className="text-[11px] uppercase font-bold text-[#F79D1B] block mb-2">
+              <span className="text-[11px] uppercase font-bold text-sol block mb-2">
                 Kjente låter & utgivelser
               </span>
               <div className="flex flex-wrap gap-2">
@@ -110,7 +110,7 @@ export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted 
                     key={idx}
                     className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-black/40 border border-white/10 text-xs text-white"
                   >
-                    <Music className="w-3 h-3 text-[#6EC1C6]" />
+                    <Music className="w-3 h-3 text-sjo" />
                     <span>{hit}</span>
                   </span>
                 ))}
@@ -120,7 +120,7 @@ export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted 
 
           {/* Music Platforms */}
           <div>
-            <span className="text-[11px] uppercase font-bold text-[#6EC1C6] block mb-2.5">
+            <span className="text-[11px] uppercase font-bold text-sjo block mb-2.5">
               Hør musikken & følg artisten
             </span>
             {artist.platforms ? (
@@ -186,10 +186,10 @@ export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted 
                     href={art.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between text-xs text-[#6EC1C6] hover:text-[#F79D1B] transition-colors group"
+                    className="flex items-center justify-between text-xs text-sjo hover:text-sol transition-colors group"
                   >
-                    <span className="truncate underline decoration-white/20 group-hover:decoration-[#F79D1B]">{art.title}</span>
-                    <ExternalLink className="w-3 h-3 shrink-0 ml-2 text-white/40 group-hover:text-[#F79D1B]" />
+                    <span className="truncate underline decoration-white/20 group-hover:decoration-sol">{art.title}</span>
+                    <ExternalLink className="w-3 h-3 shrink-0 ml-2 text-white/40 group-hover:text-sol" />
                   </a>
                 ))}
               </div>
@@ -199,12 +199,12 @@ export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted 
           {/* Vote Footer */}
           <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <Flame className="w-5 h-5 text-[#F79D1B]" />
+              <Flame className="w-5 h-5 text-sol" />
               <div>
-                <div className="font-['Oswald'] text-xl font-bold text-white leading-none">
+                <div className="font-display text-xl font-bold text-white leading-none">
                   {artist.votes} stemmer
                 </div>
-                <div className="text-[10px] text-[#F3E9D2]/60 uppercase">
+                <div className="text-[10px] text-papir/60 uppercase">
                   Publikumsønske
                 </div>
               </div>
@@ -214,11 +214,11 @@ export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted 
               onClick={() => onVote(artist.id)}
               className={`flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                 hasVoted
-                  ? 'bg-[#F79D1B] text-[#0D1B2A] shadow-[0_0_20px_rgba(247,157,27,0.5)]'
-                  : 'bg-gradient-to-r from-[#F79D1B] to-[#ffaa2b] text-[#0D1B2A] shadow-lg hover:scale-105'
+                  ? 'bg-sol text-blekk'
+                  : 'bg-sol hover:bg-sol-2 text-blekk shadow-lg'
               }`}
             >
-              <Heart className={`w-4 h-4 ${hasVoted ? 'fill-[#0D1B2A]' : ''}`} />
+              <Heart className={`w-4 h-4 ${hasVoted ? 'fill-blekk' : ''}`} />
               <span>{hasVoted ? 'Du har stemt!' : 'Stem på artisten'}</span>
             </button>
           </div>

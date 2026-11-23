@@ -48,27 +48,27 @@ export default function AdminGate({ children }) {
   const canLogin = Boolean(window.netlifyIdentity);
 
   return (
-    <div className="min-h-screen bg-[#0D1B2A] text-[#F3E9D2] flex items-center justify-center p-4">
-      <div className="w-full max-w-sm rounded-2xl bg-[#13263A] border border-[#1E6070] p-7">
-        <Lock className="w-6 h-6 text-[#F79D1B] mb-4" aria-hidden="true" />
-        <h1 className="font-['Oswald'] text-2xl font-semibold text-white mb-2">Arrangørpanel</h1>
-        <p className="text-[15px] leading-relaxed text-[#F3E9D2]/80 mb-6">
+    <div className="min-h-screen bg-blekk text-papir flex items-center justify-center p-4">
+      <div className="w-full max-w-sm rounded-2xl bg-dyp border border-fjord p-7">
+        <Lock className="w-6 h-6 text-sol mb-4" aria-hidden="true" />
+        <h1 className="font-display text-2xl font-semibold text-white mb-2">Arrangørpanel</h1>
+        <p className="text-[15px] leading-relaxed text-papir/80 mb-6">
           Logg inn med arrangørkontoen din for å se sjekklister, maler og kontakter.
         </p>
         {canLogin ? (
           <button
             type="button"
             onClick={() => window.netlifyIdentity.open('login')}
-            className="w-full py-3 rounded-xl bg-[#F79D1B] text-[#0D1B2A] font-bold text-[15px] hover:brightness-110 cursor-pointer"
+            className="w-full py-3 rounded-xl bg-sol text-blekk font-bold text-[15px]  cursor-pointer"
           >
             Logg inn
           </button>
         ) : (
-          <p role="alert" className="text-sm text-[#ffb4a8]">
+          <p role="alert" className="text-sm text-korall">
             Innloggingen er ikke tilgjengelig akkurat nå. Last siden på nytt, eller sjekk at Netlify Identity er slått på.
           </p>
         )}
-        <Link to="/" className="block text-center text-sm text-[#6EC1C6] mt-5 hover:underline">
+        <Link to="/" className="block text-center text-sm text-sjo mt-5 hover:underline">
           Tilbake til festivalsiden
         </Link>
       </div>

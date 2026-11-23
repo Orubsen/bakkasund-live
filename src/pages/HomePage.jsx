@@ -1,163 +1,184 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Compass, Music, Ticket, Ship, ArrowRight, ShieldCheck, Sparkles, Heart } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Hero from '../components/Hero';
-import RogerSection from '../components/RogerSection';
+import { festival } from '../config/festival';
+
+const destinasjoner = [
+  {
+    tittel: 'Opplevelsen',
+    tekst: 'Hva slags helg dette er: kystmat, lokalt brygg, solnedgang over havgapet og konserter tett på scenen.',
+    to: '/opplevelsen',
+    lenke: 'Les om opplevelsen',
+    bilde: '/assets/drone-festival-day.jpg',
+    alt: 'Festivalområdet på Kassholmen sett fra lufta en sommerdag',
+  },
+  {
+    tittel: 'Festivaløyen',
+    tekst: 'Kart over Kassholmen med hovedscenen ved svaberget, kystbaren, matområdet og bryggen der båten legger til.',
+    to: '/festivaloyen',
+    lenke: 'Se kartet',
+    bilde: '/assets/festival-aerial-quay.jpg',
+    alt: 'Bryggen og holmen sett ovenfra',
+  },
+  {
+    tittel: 'Artister',
+    tekst: 'Programmet for 2027 er ikke satt. Stem på artistene du vil høre, eller foreslå nye.',
+    to: '/artister',
+    lenke: 'Stem på artister',
+    bilde: '/assets/festival-drone-stage.jpg',
+    alt: 'Scenen ved vannkanten sett fra en drone',
+  },
+  {
+    tittel: 'Billetter og reise',
+    tekst: 'Dagspass, helgepass og VIP. Båten over sundet er med i alle pass. Meld deg på varsel før salget starter.',
+    to: '/billetter',
+    lenke: 'Se billetter',
+    bilde: '/assets/wristband.jpg',
+    alt: 'Festivalarmbånd for Bakkasund Live',
+  },
+];
 
 export default function HomePage({ onOpenVideo, onOpenVolunteer, onOpenSponsor, onOpenVendor }) {
-  const portalCards = [
+  const blimed = [
     {
-      title: 'Opplevelsen',
-      subtitle: 'En ny festivalepoke i Austevoll',
-      desc: 'Fem festivalpilarer, kystmagi og intim atmosfære ute i havgapet for kun 600 gjester.',
-      to: '/opplevelsen',
-      image: '/assets/drone-festival-day.jpg',
-      badge: 'Konsept',
-      icon: Compass,
+      tittel: 'Frivillig',
+      tekst: 'Ta et skift i baren, på bryggen eller ved scenen. Du får festivalpass og t-skjorte.',
+      knapp: 'Bli frivillig',
+      onClick: onOpenVolunteer,
     },
     {
-      title: 'Festivaløyen',
-      subtitle: 'Arenakart & Kassholmen',
-      desc: 'Utforsk hovedscenen ved havkanten, kystbaren, matområdet og Kassholmen Express båtanløp.',
-      to: '/festivaloyen',
-      image: '/assets/festival-aerial-quay.jpg',
-      badge: 'Interaktivt Kart',
-      icon: Ship,
+      tittel: 'Sponsor',
+      tekst: 'Synlighet foran 600 gjester og et eget nettverk for lokalt næringsliv.',
+      knapp: 'Bli sponsor',
+      onClick: onOpenSponsor,
     },
     {
-      title: 'Foreslå artist',
-      subtitle: '17 kuraterte kyst- & toppartister',
-      desc: 'Vær med på å forme musikkprogrammet for 2027! Stem på favoritter og oppdag artistenes historier.',
-      to: '/artister',
-      image: '/assets/festival-drone-stage.jpg',
-      badge: 'Avstemming',
-      icon: Music,
-    },
-    {
-      title: 'Billetter & reiser',
-      subtitle: 'Dagspass, 2-dagers og VIP',
-      desc: 'Sikre deg plass til debuten sommeren 2027. Båttransport med Kassholmen Express er inkludert.',
-      to: '/billetter',
-      image: '/assets/wristband.jpg',
-      badge: 'Kun 600 Pass',
-      icon: Ticket,
+      tittel: 'Mat og drikke',
+      tekst: 'Matvogn, restaurant, bryggeri eller brenneri: søk om plass på holmen.',
+      knapp: 'Søk om plass',
+      onClick: onOpenVendor,
     },
   ];
 
   return (
-    <div className="space-y-24 pb-16">
-      {/* Hero Section */}
-      <Hero
-        onOpenVideo={onOpenVideo}
-        onOpenVolunteer={onOpenVolunteer}
-      />
+    <>
+      <Hero onOpenVideo={onOpenVideo} />
 
-      {/* Luxury Portal Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="font-['Caveat'] text-2xl text-[#F79D1B] tracking-wider block mb-2">
-            Oversiktlig festivalunivers
-          </span>
-          <h2 className="font-['Oswald'] text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight text-white mb-4">
-            Velg hva du vil utforske
+      {/* Stedet */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 grid gap-12 lg:grid-cols-12 lg:items-center">
+        <div className="lg:col-span-7">
+          <h2 className="font-display font-medium text-[clamp(1.9rem,4vw,3.25rem)] leading-[1.12] text-papir">
+            Kassholmen ligger rett utenfor Bakkasund i Austevoll. Sommeren {festival.aar} setter vi en scene ved svaberget og slipper {festival.kapasitet} mennesker over sundet.
           </h2>
-          <p className="text-base text-[#F3E9D2]/80 font-light">
-            Klikk deg inn på dedikerte undersider for å lese mer om opplevelsen, festivalarenaen, artistavstemmingen og billettinformasjon.
+          <p className="t-ingress text-take mt-8 max-w-2xl">
+            Ingen storskjerm og ingen lang vei til scenen. Du hører musikken der den spilles, med havet i ryggen og sola som går ned bak holmene i vest.
           </p>
         </div>
+        <figure className="lg:col-span-5">
+          <img
+            src="/assets/kassholmen-drone.jpg"
+            alt="Kassholmen sett fra lufta, med de hvite husene og bryggen ute i sundet"
+            className="aspect-[4/3] w-full rounded-2xl object-cover"
+            loading="lazy"
+          />
+          <figcaption className="mt-3 text-sm text-take">Kassholmen, Austevoll.</figcaption>
+        </figure>
+      </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {portalCards.map((card, idx) => {
-            const Icon = card.icon;
-            return (
+      {/* Finn fram */}
+      <section aria-labelledby="finn-fram" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-24 sm:pb-32">
+        <h2 id="finn-fram" className="sr-only">Finn fram</h2>
+        <ul className="divide-y divide-linje border-y border-linje">
+          {destinasjoner.map((d, i) => (
+            <li key={d.to}>
               <Link
-                key={idx}
-                to={card.to}
-                className="group relative rounded-3xl overflow-hidden glass-card border border-white/15 hover:border-[#F79D1B] transition-all duration-500 shadow-xl flex flex-col justify-between min-h-[340px]"
+                to={d.to}
+                className="group grid gap-6 py-10 sm:py-14 md:grid-cols-12 md:items-center"
               >
-                {/* Background Image */}
-                <div className="absolute inset-0 z-0">
-                  <img
-                    src={card.image}
-                    alt={card.title}
-                    className="w-full h-full object-cover filter brightness-[0.45] contrast-[1.1] group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A] via-[#0D1B2A]/50 to-transparent" />
-                </div>
-
-                {/* Top Badge */}
-                <div className="relative z-10 p-6 sm:p-8 flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[#F79D1B] text-xs font-bold uppercase tracking-wider border border-[#F79D1B]/30">
-                    {card.badge}
-                  </span>
-                  <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white group-hover:text-[#F79D1B] group-hover:border-[#F79D1B] transition-colors">
-                    <Icon className="w-5 h-5" />
+                <div className={`md:col-span-5 ${i % 2 ? 'md:order-2 md:col-start-8' : ''}`}>
+                  <div className="overflow-hidden rounded-xl bg-dyp aspect-[4/3]">
+                    <img
+                      src={d.bilde}
+                      alt={d.alt}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-700 ease-[var(--ease-expo)] group-hover:scale-[1.03]"
+                    />
                   </div>
                 </div>
-
-                {/* Content */}
-                <div className="relative z-10 p-6 sm:p-8">
-                  <span className="text-xs uppercase tracking-wider text-[#6EC1C6] font-semibold block mb-1">
-                    {card.subtitle}
-                  </span>
-                  <h3 className="font-['Oswald'] text-3xl sm:text-4xl font-bold uppercase text-white mb-2 group-hover:text-[#F79D1B] transition-colors">
-                    {card.title}
+                <div className={`md:col-span-6 ${i % 2 ? 'md:order-1 md:col-start-1' : 'md:col-start-7'}`}>
+                  <h3 className="t-display text-[clamp(2.5rem,6vw,4.5rem)] text-papir transition-colors group-hover:text-sol">
+                    {d.tittel}
                   </h3>
-                  <p className="text-sm text-[#F3E9D2]/80 leading-relaxed mb-4 max-w-md font-light">
-                    {card.desc}
-                  </p>
-
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#F79D1B] group-hover:translate-x-1 transition-transform">
-                    <span>Gå til siden</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
+                  <p className="mt-4 max-w-md text-take">{d.tekst}</p>
+                  <span className="pil-lenke mt-6 text-sol">
+                    {d.lenke}
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </span>
                 </div>
               </Link>
-            );
-          })}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Gründeren */}
+      <section className="bg-natt">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 grid gap-12 lg:grid-cols-12 lg:items-center">
+          <div className="lg:col-span-5">
+            <img
+              src="/assets/roger-alraek.jpg"
+              alt="Roger Alræk ute på holmene en solskinnsdag"
+              className="aspect-[4/5] w-full rounded-2xl object-cover object-top"
+              loading="lazy"
+            />
+          </div>
+          <figure className="lg:col-span-7">
+            <blockquote>
+              <p className="font-display text-[clamp(1.6rem,3.2vw,2.5rem)] leading-[1.2] text-papir">
+                «Bakkasund LIVE er født ut av en årelang drøm og kjærlighet for Austevoll, kystnaturen og store musikkopplevelser.»
+              </p>
+            </blockquote>
+            <figcaption className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <span>
+                <span className="block font-semibold text-papir">Roger Alræk</span>
+                <span className="block text-sm text-take">Grunnlegger og festivalleder</span>
+              </span>
+              <Link to="/kontakt" className="pil-lenke text-sol">
+                Ta kontakt med Roger
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </figcaption>
+          </figure>
         </div>
       </section>
 
-      {/* Founder Section */}
-      <RogerSection />
-
-      {/* Action Strip: Volunteer / Sponsoring / Food */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#1E6070]/40 via-[#0D1B2A] to-[#1E6070]/40 border border-white/15 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <span className="text-xs uppercase font-bold text-[#F79D1B] tracking-wider block mb-1">
-              Bli med på kysteventyret
-            </span>
-            <h3 className="font-['Oswald'] text-2xl sm:text-3xl font-bold uppercase text-white">
-              Vil du bidra som frivillig, sponsor eller mataktør?
-            </h3>
-            <p className="text-xs sm:text-sm text-[#F3E9D2]/80 max-w-xl mt-1 font-light">
-              Bakkasund LIVE skapes i fellesskap med lokalsamfunnet, næringslivet og engasjerte frivillige.
+      {/* Bli med */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+        <div className="flate-papir rounded-2xl overflow-hidden px-6 py-12 sm:px-12 sm:py-16">
+          <div className="max-w-2xl">
+            <h2 className="t-display text-[clamp(2.5rem,6vw,4.5rem)] text-blekk">Bli med og lag den</h2>
+            <p className="t-ingress text-dis mt-4">
+              Festivalen blir til sammen med folk fra øyene, lokale bedrifter og frivillige. Det er plass til flere.
             </p>
           </div>
-
-          <div className="flex flex-wrap gap-3">
-            <button
-              onClick={onOpenVolunteer}
-              className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs uppercase tracking-wider cursor-pointer transition-all"
-            >
-              Bli frivillig
-            </button>
-            <button
-              onClick={onOpenSponsor}
-              className="px-5 py-3 rounded-xl bg-[#F79D1B] hover:bg-[#ffa726] text-[#0D1B2A] font-bold text-xs uppercase tracking-wider cursor-pointer transition-all shadow-lg"
-            >
-              Bli sponsor
-            </button>
-            <button
-              onClick={onOpenVendor}
-              className="px-5 py-3 rounded-xl bg-[#1E6070] hover:bg-[#25778b] text-white font-bold text-xs uppercase tracking-wider cursor-pointer transition-all"
-            >
-              Mat & drikke stand
-            </button>
-          </div>
+          <ul className="mt-12 grid gap-8 md:grid-cols-3 md:gap-0 md:divide-x md:divide-blekk/20">
+            {blimed.map((b, i) => (
+              <li key={b.tittel} className={`flex flex-col ${i > 0 ? 'md:pl-8' : ''} ${i < 2 ? 'md:pr-8' : ''}`}>
+                <h3 className="t-tittel text-2xl text-blekk">{b.tittel}</h3>
+                <p className="mt-2 text-dis flex-1">{b.tekst}</p>
+                <button
+                  type="button"
+                  onClick={b.onClick}
+                  className={`knapp mt-6 self-start ${i === 1 ? 'knapp-blekk' : 'knapp-strek text-blekk'}`}
+                >
+                  {b.knapp}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
-    </div>
+    </>
   );
 }

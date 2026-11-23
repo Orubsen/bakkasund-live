@@ -69,7 +69,7 @@ export default function AdminSponsors({ state, upsertContact, onWriteRequest }) 
     <div className="space-y-6">
       <div className="grid lg:grid-cols-2 gap-6">
         <Panel title="Hvorfor bedrifter bør være med">
-          <ul className="space-y-2.5 text-[15px] leading-relaxed text-[#F3E9D2]/85">
+          <ul className="space-y-2.5 text-[15px] leading-relaxed text-papir/85">
             {ARGUMENTS.map((a) => (
               <li key={a} className="flex gap-2.5">
                 <Check className="w-4 h-4 mt-1 shrink-0 text-[#8be0a4]" aria-hidden="true" />
@@ -82,19 +82,19 @@ export default function AdminSponsors({ state, upsertContact, onWriteRequest }) 
           <ol className="space-y-3">
             {STEPS.map((s, i) => (
               <li key={s.title} className="flex gap-3">
-                <span className="w-7 h-7 rounded-full bg-[#F79D1B]/15 text-[#F79D1B] text-sm font-bold flex items-center justify-center shrink-0">
+                <span className="w-7 h-7 rounded-full bg-sol/15 text-sol text-sm font-bold flex items-center justify-center shrink-0">
                   {i + 1}
                 </span>
                 <div>
                   <p className="text-[15px] font-semibold text-white">{s.title}</p>
-                  <p className="text-[14px] text-[#F3E9D2]/75 leading-relaxed">{s.text}</p>
+                  <p className="text-[14px] text-papir/75 leading-relaxed">{s.text}</p>
                 </div>
               </li>
             ))}
           </ol>
-          <p className="text-[12px] text-[#F3E9D2]/50 mt-4">
+          <p className="text-[12px] text-papir/50 mt-4">
             Bygger på rådene fra{' '}
-            <a href="https://www.arrangor.no/arrangorwiki/artikkel/veien-til-sponsoravtalen" target="_blank" rel="noreferrer" className="text-[#6EC1C6] hover:underline">
+            <a href="https://www.arrangor.no/arrangorwiki/artikkel/veien-til-sponsoravtalen" target="_blank" rel="noreferrer" className="text-sjo hover:underline">
               Norske Kulturarrangører
             </a>
             .
@@ -102,22 +102,22 @@ export default function AdminSponsors({ state, upsertContact, onWriteRequest }) 
         </Panel>
       </div>
 
-      <p aria-live="polite" className="text-sm text-[#6EC1C6] min-h-5">{feedback}</p>
+      <p aria-live="polite" className="text-sm text-sjo min-h-5">{feedback}</p>
 
       {SPONSOR_GROUPS.map((g) => (
         <Panel key={g.id} title={g.title}>
-          <p className="text-[15px] text-[#F3E9D2]/75 leading-relaxed mb-4 max-w-3xl">{g.why}</p>
+          <p className="text-[15px] text-papir/75 leading-relaxed mb-4 max-w-3xl">{g.why}</p>
           <ul className="grid md:grid-cols-2 gap-3">
             {g.sponsors.map((s) => (
-              <li key={s.name} className="rounded-xl bg-[#0F2133] border border-[#1E3A52] p-4 flex flex-col gap-2">
+              <li key={s.name} className="rounded-xl bg-[#0F2133] border border-linje p-4 flex flex-col gap-2">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-[15px] font-semibold text-white">{s.name}</p>
-                    <p className="text-[13px] text-[#F3E9D2]/55">{s.place}</p>
+                    <p className="text-[13px] text-papir/55">{s.place}</p>
                   </div>
-                  <span className="text-[12px] font-semibold text-[#F79D1B] text-right">{s.tier}</span>
+                  <span className="text-[12px] font-semibold text-sol text-right">{s.tier}</span>
                 </div>
-                <p className="text-[14px] text-[#F3E9D2]/80 leading-relaxed">{s.angle}</p>
+                <p className="text-[14px] text-papir/80 leading-relaxed">{s.angle}</p>
                 <div className="mt-auto flex flex-wrap items-center gap-2 pt-1">
                   <Button
                     variant="ghost"
@@ -132,7 +132,7 @@ export default function AdminSponsors({ state, upsertContact, onWriteRequest }) 
                     Legg til i kontakter
                   </Button>
                   {s.web && (
-                    <a href={s.web} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[13px] text-[#6EC1C6] hover:underline">
+                    <a href={s.web} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[13px] text-sjo hover:underline">
                       Nettside
                       <ExternalLink className="w-3 h-3" aria-hidden="true" />
                     </a>
@@ -156,7 +156,7 @@ export default function AdminSponsors({ state, upsertContact, onWriteRequest }) 
                   aria-checked={p.id === pitchId}
                   onClick={() => setPitchId(p.id)}
                   className={`w-full text-left px-4 py-2.5 rounded-xl border text-[15px] cursor-pointer ${
-                    p.id === pitchId ? 'border-[#F79D1B] bg-[#F79D1B]/10 text-white font-semibold' : 'border-[#1E3A52] hover:border-[#2B4A63]'
+                    p.id === pitchId ? 'border-sol bg-sol/10 text-white font-semibold' : 'border-linje hover:border-linje-2'
                   }`}
                 >
                   {p.title}
@@ -178,7 +178,7 @@ export default function AdminSponsors({ state, upsertContact, onWriteRequest }) 
             </Field>
           </div>
           <div className="space-y-3">
-            <pre className="whitespace-pre-wrap font-sans text-[15px] leading-relaxed rounded-xl bg-[#0D1B2A] border border-[#1E3A52] p-4 text-[#F3E9D2]">
+            <pre className="whitespace-pre-wrap font-sans text-[15px] leading-relaxed rounded-xl bg-blekk border border-linje p-4 text-papir">
               {pitchText}
             </pre>
             <Button onClick={copy}>
@@ -190,16 +190,16 @@ export default function AdminSponsors({ state, upsertContact, onWriteRequest }) 
       </Panel>
 
       <Panel title="Offentlig støtte og fond">
-        <p className="text-[15px] text-[#F3E9D2]/75 mb-4 max-w-3xl">
+        <p className="text-[15px] text-papir/75 mb-4 max-w-3xl">
           Søk støtte parallelt med sponsorene. Lokale sponsorer gjør søknadene sterkere, fordi fondene ofte krever egenandel.
         </p>
         <ul className="grid md:grid-cols-2 gap-3">
           {FUNDING.map((f) => (
-            <li key={f.name} className="rounded-xl bg-[#0F2133] border border-[#1E3A52] p-4">
+            <li key={f.name} className="rounded-xl bg-[#0F2133] border border-linje p-4">
               <p className="text-[15px] font-semibold text-white">{f.name}</p>
-              <p className="text-[14px] text-[#F3E9D2]/80 mt-1 leading-relaxed">{f.what}</p>
-              <p className="text-[14px] text-[#F3E9D2]/65 mt-1 leading-relaxed">{f.tip}</p>
-              <a href={f.web} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[13px] text-[#6EC1C6] hover:underline mt-2">
+              <p className="text-[14px] text-papir/80 mt-1 leading-relaxed">{f.what}</p>
+              <p className="text-[14px] text-papir/65 mt-1 leading-relaxed">{f.tip}</p>
+              <a href={f.web} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[13px] text-sjo hover:underline mt-2">
                 {f.web.replace(/^https?:\/\/(www\.)?/, '')}
                 <ExternalLink className="w-3 h-3" aria-hidden="true" />
               </a>

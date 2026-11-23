@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
@@ -17,53 +17,12 @@ import VolunteerModal from './components/VolunteerModal';
 import PartnersModal from './components/PartnersModal';
 import VendorModal from './components/VendorModal';
 import VideoModal from './components/VideoModal';
-import AuthModal from './components/AuthModal';
 
 export default function App() {
   const [volunteerOpen, setVolunteerOpen] = useState(false);
   const [sponsorOpen, setSponsorOpen] = useState(false);
   const [vendorOpen, setVendorOpen] = useState(false);
   const [videoOpen, setVideoOpen] = useState(false);
-  const [authOpen, setAuthOpen] = useState(false);
-
-  const [user, setUser] = useState(() => {
-    try {
-      const saved = localStorage.getItem('bakkasund_user');
-      return saved ? JSON.parse(saved) : null;
-    } catch {
-      return null;
-    }
-  });
-
-  const handleLogin = (userData) => {
-    setUser(userData);
-    localStorage.setItem('bakkasund_user', JSON.stringify(userData));
-  };
-
-  const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem('bakkasund_user');
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.logout();
-    }
-  };
-
-  // Listen to Netlify Identity on mount if available
-  useEffect(() => {
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', (netlifyUser) => {
-        if (netlifyUser && !user) {
-          handleLogin({
-            name: netlifyUser.user_metadata?.full_name || netlifyUser.email?.split('@')[0],
-            email: netlifyUser.email,
-            avatar: netlifyUser.user_metadata?.avatar_url || 'https://github.com/Orubsen.png',
-            provider: 'GitHub via Netlify Identity',
-            vip: true,
-          });
-        }
-      });
-    }
-  }, []);
 
   return (
     <BrowserRouter>
@@ -73,15 +32,13 @@ export default function App() {
         <Route
           path="*"
           element={
-      <div className="min-h-screen bg-[#0D1B2A] text-[#F3E9D2] relative selection:bg-[#F79D1B] selection:text-[#0D1B2A] flex flex-col justify-between">
+      <div className="min-h-screen bg-blekk text-papir relative flex flex-col">
         <a href="#hovedinnhold" className="skip-link">Hopp til innholdet</a>
         {/* Navigation Bar */}
         <Navbar
           onOpenVolunteer={() => setVolunteerOpen(true)}
           onOpenSponsor={() => setSponsorOpen(true)}
           onOpenVendor={() => setVendorOpen(true)}
-          user={user}
-          onOpenAuth={() => setAuthOpen(true)}
         />
 
         {/* Multi-page Routing */}
@@ -143,14 +100,6 @@ export default function App() {
         <VideoModal
           isOpen={videoOpen}
           onClose={() => setVideoOpen(false)}
-        />
-
-        <AuthModal
-          isOpen={authOpen}
-          onClose={() => setAuthOpen(false)}
-          user={user}
-          onLogin={handleLogin}
-          onLogout={handleLogout}
         />
       </div>
           }

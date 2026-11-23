@@ -373,20 +373,20 @@ export default function ArtistWishlist() {
   return (
     <section id="artister" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
       <div className="text-center max-w-3xl mx-auto mb-12">
-        <span className="font-['Caveat'] text-2xl text-[#F79D1B] tracking-wider block mb-2">
+        <span className="t-merke text-sol tracking-wider block mb-2">
           Vær med å forme programmet
         </span>
-        <h2 className="font-['Oswald'] text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight text-white mb-4">
+        <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight text-white mb-4">
           Foreslå & stem på artister
         </h2>
-        <p className="text-base text-[#F3E9D2]/80 font-light">
+        <p className="text-base text-papir/80">
           Bakkasund LIVE 2027 lages for deg. Trykk på en artist for å lese fakta, lytte til musikken og avgi din stemme – eller foreslå en ny artist du drømmer om å oppleve på Kassholmen!
         </p>
 
         <div className="mt-8 flex justify-center">
           <button
             onClick={() => setFormOpen(!formOpen)}
-            className="flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#F79D1B] to-[#ffaa2b] text-[#0D1B2A] font-bold text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(247,157,27,0.35)] hover:scale-105 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-6 py-3 rounded-full bg-sol hover:bg-sol-2 text-blekk font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Foreslå artist til festivalen</span>
@@ -396,29 +396,29 @@ export default function ArtistWishlist() {
 
       {/* Suggestion Form */}
       {formOpen && (
-        <div className="max-w-xl mx-auto mb-16 p-6 sm:p-8 rounded-3xl bg-[#0D1B2A]/95 border-2 border-[#F79D1B] shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-2xl animate-fade-in relative text-left">
-          <h3 className="font-['Oswald'] text-2xl font-bold uppercase text-white mb-2 flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-[#F79D1B]" />
+        <div className="max-w-xl mx-auto mb-16 p-6 sm:p-8 rounded-2xl bg-blekk/95 border-2 border-sol shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-2xl animate-fade-in relative text-left">
+          <h3 className="font-display text-2xl font-bold uppercase text-white mb-2 flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-sol" />
             Ditt artistforslag
           </h3>
-          <p className="text-xs text-[#F3E9D2]/70 mb-6">
+          <p className="text-xs text-papir/70 mb-6">
             Forslaget sendes direkte til bookinggruppen og Roger Alræk!
           </p>
 
           {submittedMessage ? (
-            <div className="p-6 rounded-2xl bg-[#1E6070]/60 border border-[#6EC1C6] text-center space-y-2">
-              <CheckCircle2 className="w-12 h-12 text-[#6EC1C6] mx-auto animate-bounce" />
-              <h4 className="font-['Oswald'] text-xl font-bold text-white uppercase">
+            <div className="p-6 rounded-2xl bg-fjord/60 border border-sjo text-center space-y-2">
+              <CheckCircle2 className="w-12 h-12 text-sjo mx-auto animate-bounce" />
+              <h4 className="font-display text-xl font-bold text-white uppercase">
                 Tusen takk for forslaget!
               </h4>
-              <p className="text-sm text-[#F3E9D2]">
+              <p className="text-sm text-papir">
                 Artisten er nå lagt til i listen slik at andre også kan stemme på den.
               </p>
             </div>
           ) : (
             <form onSubmit={handleSubmitSuggestion} className="space-y-4">
               <div>
-                <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                <label className="block text-xs uppercase font-bold text-sjo mb-1">
                   Artist- eller bandnavn *
                 </label>
                 <input
@@ -427,19 +427,19 @@ export default function ArtistWishlist() {
                   placeholder="f.eks. Sigrid, Bjørn Eidsvåg, Matoma..."
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                  <label className="block text-xs uppercase font-bold text-sjo mb-1">
                     Sjanger
                   </label>
                   <select
                     value={formData.genre}
                     onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-[#0D1B2A] border border-white/15 text-white focus:outline-none focus:border-[#F79D1B] text-sm"
+                    className="w-full px-4 py-3 rounded-xl bg-blekk border border-white/15 text-white focus:outline-none focus:border-sol text-sm"
                   >
                     <option>Norsk Pop/Rock</option>
                     <option>Kyst & Vise</option>
@@ -449,7 +449,7 @@ export default function ArtistWishlist() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                  <label className="block text-xs uppercase font-bold text-sjo mb-1">
                     Din e-post (valgfritt)
                   </label>
                   <input
@@ -457,13 +457,13 @@ export default function ArtistWishlist() {
                     placeholder="din@epost.no"
                     value={formData.userContact}
                     onChange={(e) => setFormData({ ...formData, userContact: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                <label className="block text-xs uppercase font-bold text-sjo mb-1">
                   Hvorfor passer denne artisten på Kassholmen?
                 </label>
                 <textarea
@@ -471,7 +471,7 @@ export default function ArtistWishlist() {
                   placeholder="Fortell hvorfor denne artisten skaper magi i havgapet..."
                   value={formData.reason}
                   onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                 />
               </div>
 
@@ -485,7 +485,7 @@ export default function ArtistWishlist() {
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-[#F79D1B] hover:bg-[#ffaa2b] text-[#0D1B2A] font-bold text-xs uppercase tracking-wider shadow-lg cursor-pointer"
+                  className="px-6 py-2.5 rounded-xl bg-sol hover:bg-[#ffaa2b] text-blekk font-bold text-xs uppercase tracking-wider shadow-lg cursor-pointer"
                 >
                   Send inn forslag
                 </button>
@@ -505,7 +505,7 @@ export default function ArtistWishlist() {
               onClick={() => setActiveCategory(cat)}
               className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                 activeCategory === cat
-                  ? 'bg-[#F79D1B] text-[#0D1B2A] shadow-md'
+                  ? 'bg-sol text-blekk shadow-md'
                   : 'bg-white/5 hover:bg-white/10 text-white/70 border border-white/10'
               }`}
             >
@@ -522,7 +522,7 @@ export default function ArtistWishlist() {
             placeholder="Søk etter artist..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 rounded-full bg-white/5 border border-white/15 text-white placeholder-white/40 text-xs focus:outline-none focus:border-[#F79D1B]"
+            className="w-full pl-9 pr-4 py-2 rounded-full bg-white/5 border border-white/15 text-white placeholder-white/40 text-xs focus:outline-none focus:border-sol"
           />
         </div>
       </div>
@@ -535,10 +535,10 @@ export default function ArtistWishlist() {
             <div
               key={artist.id}
               onClick={() => setSelectedArtist(artist)}
-              className={`glass-card rounded-2xl overflow-hidden flex flex-col justify-between border transition-all cursor-pointer group hover:scale-[1.02] ${
+              className={`glass-card rounded-2xl overflow-hidden flex flex-col justify-between border transition-all cursor-pointer group ${
                 hasVoted
-                  ? 'border-[#F79D1B] bg-[#1E6070]/25 shadow-[0_0_20px_rgba(247,157,27,0.2)]'
-                  : 'border-white/10 hover:border-[#6EC1C6]/50'
+                  ? 'border-sol bg-fjord/25'
+                  : 'border-white/10 hover:border-sjo/50'
               }`}
             >
               <div>
@@ -547,33 +547,33 @@ export default function ArtistWishlist() {
                   <img
                     src={artist.image}
                     alt={artist.name}
-                    className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-500"
+                    className="w-full h-full object-cover object-center transition-transform duration-500"
                     onError={(e) => {
                       e.target.src = '/assets/kassholmen-seagull.jpg';
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A] via-transparent to-black/20" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-blekk via-transparent to-black/20" />
 
                   {/* Tag */}
-                  <div className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-md bg-black/70 backdrop-blur-sm text-[10px] uppercase font-bold text-[#F79D1B]">
+                  <div className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-md bg-black/70 backdrop-blur-sm text-[10px] uppercase font-bold text-sol">
                     {artist.tag}
                   </div>
 
                   {/* Info Icon Pill */}
-                  <div className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/80 group-hover:bg-[#F79D1B] group-hover:text-[#0D1B2A] transition-colors">
+                  <div className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/80 group-hover:bg-sol group-hover:text-blekk transition-colors">
                     <Info className="w-3.5 h-3.5" />
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-4 text-left">
-                  <h3 className="font-['Oswald'] text-xl font-bold uppercase tracking-wide text-white group-hover:text-[#F79D1B] transition-colors">
+                  <h3 className="font-display text-xl font-bold uppercase tracking-wide text-white group-hover:text-sol transition-colors">
                     {artist.name}
                   </h3>
-                  <div className="text-[11px] text-[#6EC1C6] font-medium uppercase tracking-wider mb-2">
+                  <div className="text-[11px] text-sjo font-medium uppercase tracking-wider mb-2">
                     {artist.genre}
                   </div>
-                  <p className="text-xs text-[#F3E9D2]/75 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-papir/75 line-clamp-2 leading-relaxed">
                     {artist.desc}
                   </p>
                 </div>
@@ -582,7 +582,7 @@ export default function ArtistWishlist() {
               {/* Vote & Pop-up Footer */}
               <div className="p-4 pt-2 border-t border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-white">
-                  <Flame className="w-4 h-4 text-[#F79D1B]" />
+                  <Flame className="w-4 h-4 text-sol" />
                   <span>{artist.votes}</span>
                 </div>
 
@@ -594,11 +594,11 @@ export default function ArtistWishlist() {
                     }}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                       hasVoted
-                        ? 'bg-[#F79D1B] text-[#0D1B2A] shadow-md'
+                        ? 'bg-sol text-blekk shadow-md'
                         : 'bg-white/10 hover:bg-white/20 text-white border border-white/15'
                     }`}
                   >
-                    <Heart className={`w-3.5 h-3.5 ${hasVoted ? 'fill-[#0D1B2A]' : ''}`} />
+                    <Heart className={`w-3.5 h-3.5 ${hasVoted ? 'fill-blekk' : ''}`} />
                     <span>{hasVoted ? 'Stemt' : 'Stem'}</span>
                   </button>
                 </div>

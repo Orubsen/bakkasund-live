@@ -1,129 +1,331 @@
 @import "tailwindcss";
 
+/*
+  Bakkasund LIVE designsystem
+  ---------------------------
+  Idé: festivalplakaten som nettside. To flater – papir (dag) og blekk (natt) –
+  og én aksent: sola. Siden går fra dag til natt når du blar, slik festivalen
+  gjør det fra ettermiddag til siste konsert.
+
+  Farger    papir/papir-2 (dag), blekk/natt/dyp/linje (natt), sol (aksent),
+            rav (sol som tekst på papir), fjord/sjø (sekundær), dis/tåke (dempet tekst)
+  Skrift    Oswald (titler, tall), Archivo (brødtekst og grensesnitt),
+            Kaushan Script (kun ordmerket «Live» og slagordet)
+  Radius    sm 6px knapper/felt, xl 12px kort, 2xl 16px store flater
+  Bevegelse 150 ms for tilstand, 400–700 ms for innganger, ease-out-expo
+*/
+
 @theme {
+  /* Natt */
+  --color-blekk: #0D1B2A;
+  --color-natt: #08131F;
+  --color-dyp: #13263A;
+  --color-dyp-2: #182F47;
+  --color-linje: #1E3A52;
+  --color-linje-2: #2B4A63;
+  --color-take: #9AA6B2;
+
+  /* Dag */
+  --color-papir: #F3E9D2;
+  --color-papir-2: #EADCBA;
+  --color-papir-3: #DFCDA4;
+  --color-dis: #4A5866;
+  --color-rav: #9A4A05;
+
+  /* Aksent og sekundær */
+  --color-sol: #F79D1B;
+  --color-sol-2: #FFB547;
+  --color-fjord: #1E6070;
+  --color-sjo: #6EC1C6;
+  --color-korall: #FFB4A8;
+
+  /* Bakoverkompatible navn */
   --color-navy: #0D1B2A;
   --color-teal: #1E6070;
   --color-cyan: #6EC1C6;
   --color-orange: #F79D1B;
   --color-sand: #F3E9D2;
 
-  --font-oswald: 'Oswald', sans-serif;
-  --font-brush: 'Kaushan Script', 'Caveat', cursive;
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+  --font-oswald: 'Oswald', 'Arial Narrow', sans-serif;
+  --font-brush: 'Kaushan Script', cursive;
+  --font-sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
   color-scheme: dark;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.05 0 0 0 0 0.1 0 0 0 0 0.16 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background-color: #0D1B2A;
-  color: #F3E9D2;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--color-blekk);
+  color: var(--color-papir);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+h1, h2, h3, h4 {
+  text-wrap: balance;
 }
-::-webkit-scrollbar-track {
-  background: #0D1B2A;
-}
-::-webkit-scrollbar-thumb {
-  background: #1E6070;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #F79D1B;
+p {
+  text-wrap: pretty;
 }
 
-/* Glassmorphism utility */
+::selection {
+  background: var(--color-sol);
+  color: var(--color-blekk);
+}
+
+@layer components {
+/* ---------- Flater ---------- */
+
+/* Papirflate med trykkfølelse. Brukes på dagsseksjoner. */
+.flate-papir {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--color-papir);
+  color: var(--color-blekk);
+  color-scheme: light;
+}
+.flate-papir::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--grain);
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* Gamle hjelpeklasser, nå flate og rolige i stedet for glass og glød */
 .glass-panel {
-  background: rgba(13, 27, 42, 0.72);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(110, 193, 198, 0.18);
+  background: var(--color-dyp);
+  border: 1px solid var(--color-linje);
 }
-
 .glass-card {
-  background: rgba(30, 96, 112, 0.18);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(243, 233, 210, 0.1);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--color-dyp);
+  border: 1px solid var(--color-linje);
+  transition: border-color 150ms ease-out, background-color 150ms ease-out;
 }
-
 .glass-card:hover {
-  border-color: rgba(247, 157, 27, 0.45);
-  box-shadow: 0 12px 30px -10px rgba(247, 157, 27, 0.15);
-  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--color-sol) 55%, transparent);
 }
-
-/* Glow effects */
-.glow-orange {
-  text-shadow: 0 0 25px rgba(247, 157, 27, 0.6);
-}
-
+.glow-orange,
 .glow-cyan {
-  text-shadow: 0 0 25px rgba(110, 193, 198, 0.6);
+  text-shadow: none;
 }
 
-/* Subtle Animated Wave Background */
-@keyframes waveDrift {
-  0% { transform: translateX(0) translateZ(0) scaleY(1); }
-  50% { transform: translateX(-25%) translateZ(0) scaleY(0.95); }
-  100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
+/* ---------- Typografi ---------- */
+
+.t-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+.t-tittel {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0;
+}
+.t-ingress {
+  font-size: clamp(1.125rem, 1.2vw + 0.8rem, 1.375rem);
+  line-height: 1.5;
+}
+.t-merke {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.t-pensel {
+  font-family: var(--font-brush);
+  font-weight: 400;
+  line-height: 1.1;
 }
 
-.animate-wave {
-  animation: waveDrift 20s linear infinite alternate;
+/* ---------- Knapper ---------- */
+
+.knapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 150ms ease-out, color 150ms ease-out, border-color 150ms ease-out, transform 150ms ease-out;
+}
+.knapp:active {
+  transform: translateY(1px);
+}
+.knapp-sol {
+  background: var(--color-sol);
+  color: var(--color-blekk);
+}
+.knapp-sol:hover {
+  background: var(--color-sol-2);
+}
+.knapp-blekk {
+  background: var(--color-blekk);
+  color: var(--color-papir);
+}
+.knapp-blekk:hover {
+  background: var(--color-fjord);
+}
+.knapp-strek {
+  border: 1.5px solid currentColor;
+  color: inherit;
+}
+.knapp-strek:hover {
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+.knapp-liten {
+  min-height: 2.25rem;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
 }
 
-/* Shimmer animation */
-@keyframes shimmer {
-  100% { transform: translateX(100%); }
+/* Lenke med pil som flytter seg litt ved hover */
+.pil-lenke {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+.pil-lenke:hover {
+  text-decoration: underline;
+}
+.pil-lenke svg {
+  transition: transform 200ms var(--ease-expo);
+}
+.pil-lenke:hover svg {
+  transform: translateX(3px);
 }
 
-/* Inngang for dialoger og menyer (var brukt, men manglet definisjon) */
+}
+
+/* ---------- Bevegelse ---------- */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: none; }
 }
 .animate-fade-in {
-  animation: fadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: fadeIn 0.22s var(--ease-expo) both;
 }
 
-/* Synlig tastaturfokus på alt som kan betjenes */
+@keyframes reis {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+.inngang {
+  animation: reis 0.8s var(--ease-expo) both;
+}
+.inngang-2 { animation-delay: 0.08s; }
+.inngang-3 { animation-delay: 0.16s; }
+.inngang-4 { animation-delay: 0.24s; }
+
+@keyframes dønning {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.donning {
+  animation: dønning 24s linear infinite;
+}
+.donning-sakte {
+  animation-duration: 38s;
+}
+
+/*
+  Solnedgang: sola i toppen synker bak havet når du blar.
+  Bruker scroll-drevet animasjon der nettleseren støtter det, ellers står den stille.
+*/
+@keyframes synk {
+  from { transform: translateY(0) scale(1); }
+  to { transform: translateY(38%) scale(0.92); }
+}
+@supports (animation-timeline: view()) {
+  .sol-synker {
+    animation: synk linear both;
+    animation-timeline: view();
+    animation-range: exit 0% exit 90%;
+  }
+}
+
+/* Behold for gamle komponenter */
+@keyframes waveDrift {
+  0% { transform: translateX(0) translateZ(0) scaleY(1); }
+  50% { transform: translateX(-25%) translateZ(0) scaleY(0.95); }
+  100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
+}
+.animate-wave {
+  animation: waveDrift 20s linear infinite alternate;
+}
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+/* ---------- Tilgjengelighet ---------- */
+
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
-  outline: 2px solid #F79D1B;
+  outline: 2px solid var(--color-sol);
   outline-offset: 3px;
-  border-radius: 6px;
+  border-radius: 4px;
+}
+.flate-papir :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline-color: var(--color-blekk);
 }
 [role="dialog"] > [tabindex="-1"]:focus { outline: none; }
 
-/* Hopp til innhold */
 .skip-link {
   position: absolute;
   left: 1rem;
   top: -4rem;
   z-index: 100;
   padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  background: #F79D1B;
-  color: #0D1B2A;
+  border-radius: 6px;
+  background: var(--color-sol);
+  color: var(--color-blekk);
   font-weight: 700;
   transition: top 0.15s;
 }
 .skip-link:focus { top: 1rem; }
 
-/* Respekter ønske om mindre bevegelse */
+/* Rullefelt */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-natt); }
+::-webkit-scrollbar-thumb { background: var(--color-linje-2); border-radius: 5px; border: 2px solid var(--color-natt); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-fjord); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .glass-card:hover { transform: none; }
+  .sol-synker { animation: none !important; }
 }

@@ -61,7 +61,7 @@ export default function VolunteerModal({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto" role="dialog" aria-modal="true" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="relative w-full max-w-2xl bg-[#0D1B2A] border-2 border-[#6EC1C6]/40 rounded-3xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9)] my-8" ref={dialogRef} tabIndex={-1}>
+      <div className="relative w-full max-w-2xl bg-blekk border-2 border-sjo/40 rounded-2xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9)] my-8" ref={dialogRef} tabIndex={-1}>
         {/* Close Button */}
         <button
           onClick={onClose} aria-label="Lukk" data-close
@@ -72,13 +72,13 @@ export default function VolunteerModal({ isOpen, onClose }) {
 
         {submitted ? (
           <div className="py-12 text-center space-y-4">
-            <div className="w-16 h-16 rounded-full bg-[#6EC1C6]/20 border-2 border-[#6EC1C6] flex items-center justify-center mx-auto text-[#6EC1C6]">
+            <div className="w-16 h-16 rounded-full bg-sjo/20 border-2 border-sjo flex items-center justify-center mx-auto text-sjo">
               <CheckCircle2 className="w-10 h-10 animate-bounce" />
             </div>
-            <h3 className="font-['Oswald'] text-3xl font-bold uppercase text-white">
+            <h3 className="font-display text-3xl font-bold uppercase text-white">
               Velkommen på laget, {formData.name}!
             </h3>
-            <p className="text-sm text-[#F3E9D2]/80 max-w-md mx-auto leading-relaxed">
+            <p className="text-sm text-papir/80 max-w-md mx-auto leading-relaxed">
               Vi har mottatt din søknad som frivillig til Bakkasund LIVE 2027.
               Festivalleder Roger Alræk og frivilligkoordinatoren vil ta kontakt med deg på <strong className="text-white">{formData.email}</strong> med vaktplan og opplegg.
             </p>
@@ -88,7 +88,7 @@ export default function VolunteerModal({ isOpen, onClose }) {
                   setSubmitted(false);
                   onClose();
                 }}
-                className="px-8 py-3 rounded-xl bg-[#F79D1B] text-[#0D1B2A] font-bold text-xs uppercase tracking-wider hover:brightness-110"
+                className="px-8 py-3 rounded-xl bg-sol text-blekk font-bold text-xs uppercase tracking-wider "
               >
                 Lukk og gå tilbake til siden
               </button>
@@ -97,25 +97,25 @@ export default function VolunteerModal({ isOpen, onClose }) {
         ) : (
           <>
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-[#F79D1B]/20 border border-[#F79D1B]/40 flex items-center justify-center text-[#F79D1B]">
+              <div className="w-10 h-10 rounded-xl bg-sol/20 border border-sol/40 flex items-center justify-center text-sol">
                 <HeartHandshake className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-['Caveat'] text-xl text-[#F79D1B] block">Bli en festivalhelt</span>
-                <h3 className="font-['Oswald'] text-2xl sm:text-3xl font-bold uppercase text-white">
+                <span className="t-merke text-sol block">Bli en festivalhelt</span>
+                <h3 className="font-display text-2xl sm:text-3xl font-bold uppercase text-white">
                   Bli Frivillig På Kassholmen 2027
                 </h3>
               </div>
             </div>
 
-            <p className="text-xs text-[#F3E9D2]/80 mb-6">
+            <p className="text-xs text-papir/80 mb-6">
               Som frivillig får du gratis festivalpass, offisiell crew-hettegenser, mat & drikke på vakt, og invitasjon til den uforglemmelige frivilligfesten!
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4 text-left">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                  <label className="block text-xs uppercase font-bold text-sjo mb-1">
                     Ditt Fulle Navn *
                   </label>
                   <input
@@ -124,12 +124,12 @@ export default function VolunteerModal({ isOpen, onClose }) {
                     placeholder="Ola Nordmann"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                  <label className="block text-xs uppercase font-bold text-sjo mb-1">
                     Telefonnummer *
                   </label>
                   <input
@@ -138,14 +138,14 @@ export default function VolunteerModal({ isOpen, onClose }) {
                     placeholder="+47 900 00 000"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="sm:col-span-2">
-                  <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                  <label className="block text-xs uppercase font-bold text-sjo mb-1">
                     E-postadresse *
                   </label>
                   <input
@@ -154,12 +154,12 @@ export default function VolunteerModal({ isOpen, onClose }) {
                     placeholder="ola@epost.no"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                  <label className="block text-xs uppercase font-bold text-sjo mb-1">
                     Alder *
                   </label>
                   <input
@@ -170,14 +170,14 @@ export default function VolunteerModal({ isOpen, onClose }) {
                     placeholder="f.eks. 24"
                     value={formData.age}
                     onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                   />
                 </div>
               </div>
 
               {/* Roles selection */}
               <div>
-                <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-2">
+                <label className="block text-xs uppercase font-bold text-sjo mb-2">
                   Hva vil du helst jobbe med? *
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -190,14 +190,14 @@ export default function VolunteerModal({ isOpen, onClose }) {
                         onClick={() => setFormData({ ...formData, role: r.name })}
                         className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center gap-2.5 ${
                           isSelected
-                            ? 'bg-[#1E6070] border-[#F79D1B] text-white shadow-md'
+                            ? 'bg-fjord border-sol text-white shadow-md'
                             : 'bg-white/5 border-white/10 hover:bg-white/10 text-white/80'
                         }`}
                       >
-                        <Icon className={`w-4 h-4 shrink-0 ${isSelected ? 'text-[#F79D1B]' : 'text-[#6EC1C6]'}`} />
+                        <Icon className={`w-4 h-4 shrink-0 ${isSelected ? 'text-sol' : 'text-sjo'}`} />
                         <div>
                           <div className="text-xs font-bold leading-tight">{r.name}</div>
-                          <div className="text-[10px] text-[#F3E9D2]/70 leading-tight">{r.desc}</div>
+                          <div className="text-[10px] text-papir/70 leading-tight">{r.desc}</div>
                         </div>
                       </div>
                     );
@@ -207,13 +207,13 @@ export default function VolunteerModal({ isOpen, onClose }) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                  <label className="block text-xs uppercase font-bold text-sjo mb-1">
                     Genser/T-skjorte Størrelse
                   </label>
                   <select
                     value={formData.tshirtSize}
                     onChange={(e) => setFormData({ ...formData, tshirtSize: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-[#0D1B2A] border border-white/15 text-white text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl bg-blekk border border-white/15 text-white text-sm"
                   >
                     <option>XS</option>
                     <option>S</option>
@@ -225,7 +225,7 @@ export default function VolunteerModal({ isOpen, onClose }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                  <label className="block text-xs uppercase font-bold text-sjo mb-1">
                     Erfaring / Sertifikater (Valgfritt)
                   </label>
                   <input
@@ -233,13 +233,13 @@ export default function VolunteerModal({ isOpen, onClose }) {
                     placeholder="Båtførerprøven, vekterkurs, skjenkeprøve osv."
                     value={formData.experience}
                     onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                <label className="block text-xs uppercase font-bold text-sjo mb-1">
                   Kort om deg selv eller venner du vil jobbe med
                 </label>
                 <textarea
@@ -247,7 +247,7 @@ export default function VolunteerModal({ isOpen, onClose }) {
                   placeholder="Skriv gjerne om du søker sammen med noen..."
                   value={formData.comments}
                   onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                 />
               </div>
 
@@ -262,13 +262,13 @@ export default function VolunteerModal({ isOpen, onClose }) {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="px-7 py-3 rounded-xl bg-gradient-to-r from-[#F79D1B] to-[#ffaa2b] text-[#0D1B2A] font-bold text-xs uppercase tracking-wider shadow-lg hover:brightness-110 cursor-pointer disabled:opacity-60 disabled:cursor-wait"
+                  className="px-7 py-3 rounded-xl bg-sol hover:bg-sol-2 text-blekk font-bold text-xs uppercase tracking-wider shadow-lg  cursor-pointer disabled:opacity-60 disabled:cursor-wait"
                 >
                   {sending ? 'Sender …' : 'Send søknad som frivillig'}
                 </button>
               </div>
               {sendError && (
-                <p role="alert" className="text-sm text-[#ffb4a8] bg-[#5a1d14]/40 border border-[#ffb4a8]/40 rounded-xl px-4 py-3">
+                <p role="alert" className="text-sm text-korall bg-[#5a1d14]/40 border border-korall/40 rounded-xl px-4 py-3">
                   {sendError}
                 </p>
               )}

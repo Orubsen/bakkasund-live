@@ -31,10 +31,10 @@ const FILTERS = [
 ];
 
 const statusTone = {
-  overdue: 'text-[#ffb4a8]',
-  soon: 'text-[#F79D1B]',
-  open: 'text-[#F3E9D2]/60',
-  done: 'text-[#6EC1C6]',
+  overdue: 'text-korall',
+  soon: 'text-sol',
+  open: 'text-papir/60',
+  done: 'text-sjo',
 };
 
 function ChecklistItem({ item, entry, status, onChange }) {
@@ -43,14 +43,14 @@ function ChecklistItem({ item, entry, status, onChange }) {
   const checkId = `chk-${item.id}`;
 
   return (
-    <li className={`rounded-xl border ${status.key === 'overdue' ? 'border-[#ffb4a8]/40' : 'border-[#1E3A52]'} bg-[#0F2133]`}>
+    <li className={`rounded-xl border ${status.key === 'overdue' ? 'border-korall/40' : 'border-linje'} bg-[#0F2133]`}>
       <div className="flex items-start gap-3 p-4">
         <input
           id={checkId}
           type="checkbox"
           checked={done}
           onChange={(e) => onChange({ done: e.target.checked })}
-          className="mt-1 w-5 h-5 shrink-0 accent-[#6EC1C6] cursor-pointer"
+          className="mt-1 w-5 h-5 shrink-0 accent-sjo cursor-pointer"
         />
         <div className="flex-1 min-w-0">
           <label htmlFor={checkId} className={`block text-[15px] font-semibold leading-snug cursor-pointer ${done ? 'text-white/50 line-through decoration-white/30' : 'text-white'}`}>
@@ -59,11 +59,11 @@ function ChecklistItem({ item, entry, status, onChange }) {
           <p className="text-[13px] mt-1">
             <span className={statusTone[status.key]}>{relativeText(status)}</span>
             {status.due && (
-              <span className="text-[#F3E9D2]/50">
+              <span className="text-papir/50">
                 {' '}· frist {formatDate(status.due)}
               </span>
             )}
-            {entry?.owner && <span className="text-[#F3E9D2]/50"> · {entry.owner}</span>}
+            {entry?.owner && <span className="text-papir/50"> · {entry.owner}</span>}
           </p>
         </div>
         <button
@@ -71,7 +71,7 @@ function ChecklistItem({ item, entry, status, onChange }) {
           onClick={() => setOpen(!open)}
           aria-expanded={open}
           aria-label={open ? `Skjul detaljer for ${item.title}` : `Vis detaljer for ${item.title}`}
-          className="p-1.5 rounded-lg text-[#F3E9D2]/60 hover:text-white hover:bg-white/5 cursor-pointer"
+          className="p-1.5 rounded-lg text-papir/60 hover:text-white hover:bg-white/5 cursor-pointer"
         >
           <ChevronDown className={`w-5 h-5 transition-transform ${open ? 'rotate-180' : ''}`} aria-hidden="true" />
         </button>
@@ -79,13 +79,13 @@ function ChecklistItem({ item, entry, status, onChange }) {
 
       {open && (
         <div className="px-4 pb-4 pl-12 space-y-3 animate-fade-in">
-          <p className="text-[14px] leading-relaxed text-[#F3E9D2]/80 max-w-[68ch]">{item.detail}</p>
+          <p className="text-[14px] leading-relaxed text-papir/80 max-w-[68ch]">{item.detail}</p>
           {item.link && (
             <a
               href={item.link.url}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-[#6EC1C6] hover:underline"
+              className="inline-flex items-center gap-1.5 text-sm text-sjo hover:underline"
             >
               {item.link.label}
               <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
@@ -107,7 +107,7 @@ function ChecklistItem({ item, entry, status, onChange }) {
               className={inputClass}
             />
           </div>
-          {entry?.doneAt && <p className="text-[13px] text-[#6EC1C6]">Huket av {entry.doneAt}</p>}
+          {entry?.doneAt && <p className="text-[13px] text-sjo">Huket av {entry.doneAt}</p>}
         </div>
       )}
     </li>
@@ -155,15 +155,15 @@ export default function AdminChecklist({ state, setItem }) {
               onClick={() => setFilter(f.id)}
               className={`px-3.5 py-2 rounded-full text-sm font-semibold border cursor-pointer ${
                 filter === f.id
-                  ? 'bg-[#F3E9D2] text-[#0D1B2A] border-[#F3E9D2]'
-                  : 'border-[#2B4A63] text-[#F3E9D2]/80 hover:text-white'
+                  ? 'bg-papir text-blekk border-papir'
+                  : 'border-linje-2 text-papir/80 hover:text-white'
               }`}
             >
               {f.label} <span className="opacity-70">{counts[f.id]}</span>
             </button>
           ))}
         </div>
-        <label className="flex items-center gap-2 text-sm text-[#F3E9D2]/80">
+        <label className="flex items-center gap-2 text-sm text-papir/80">
           Område
           <select value={cat} onChange={(e) => setCat(e.target.value)} className={`${inputClass} w-auto py-2`}>
             <option value="all">Alle områder</option>
@@ -177,7 +177,7 @@ export default function AdminChecklist({ state, setItem }) {
       </div>
 
       {visible.length === 0 && (
-        <p className="rounded-xl border border-dashed border-[#2B4A63] p-6 text-[15px] text-[#F3E9D2]/70">
+        <p className="rounded-xl border border-dashed border-linje-2 p-6 text-[15px] text-papir/70">
           {filter === 'overdue'
             ? 'Ingen oppgaver er over fristen.'
             : filter === 'done'
@@ -192,11 +192,11 @@ export default function AdminChecklist({ state, setItem }) {
         return (
           <section key={phase.id} aria-labelledby={`phase-${phase.id}`}>
             <div className="flex items-baseline gap-3 mb-3">
-              <span className="font-['Oswald'] text-[#F79D1B] text-lg">{idx + 1}</span>
-              <h2 id={`phase-${phase.id}`} className="font-['Oswald'] text-xl font-semibold text-white">
+              <span className="font-display text-sol text-lg">{idx + 1}</span>
+              <h2 id={`phase-${phase.id}`} className="font-display text-xl font-semibold text-white">
                 {phase.name}
               </h2>
-              <span className="text-sm text-[#F3E9D2]/55">{phase.range}</span>
+              <span className="text-sm text-papir/55">{phase.range}</span>
             </div>
             <ul className="space-y-2">
               {inPhase.map(({ item, entry, status }) => (
@@ -213,7 +213,7 @@ export default function AdminChecklist({ state, setItem }) {
         );
       })}
 
-      <p className="text-[13px] text-[#F3E9D2]/55 max-w-[72ch]">
+      <p className="text-[13px] text-papir/55 max-w-[72ch]">
         Fristene er anbefalte frister med god margin, regnet bakover fra festivaldatoen. Lovpålagte frister og krav må
         alltid bekreftes hos kommunen, politiet og de andre instansene.
       </p>
