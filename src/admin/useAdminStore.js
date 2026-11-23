@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { ARTISTS_DATA } from '../components/ArtistWishlist';
+import { ARTIST_BOOKING } from './artistBooking';
 
 const KEY = 'bakkasund_admin_v1';
 
@@ -8,8 +9,8 @@ function seedContacts() {
     id: `artist-${a.id}`,
     type: 'artist',
     name: a.name,
-    contactPerson: '',
-    email: '',
+    contactPerson: ARTIST_BOOKING[a.id]?.contacts[0]?.name || '',
+    email: ARTIST_BOOKING[a.id]?.contacts[0]?.email || '',
     status: a.status === 'I dialog' ? 'dialog' : 'ikke-kontaktet',
     lastContact: '',
     nextFollowUp: '',
@@ -30,6 +31,20 @@ const DEFAULT_STATE = {
   contacts: null,
 };
 
+// Fyller inn bookingkontakt på artister som mangler det, uten å overskrive det dere har skrevet selv.
+function fillBookingInfo(contacts) {
+  return contacts.map((c) => {
+    if (c.type !== 'artist' || !c.id.startsWith('artist-')) return c;
+    const first = ARTIST_BOOKING[c.id.slice(7)]?.contacts[0];
+    if (!first) return c;
+    return {
+      ...c,
+      contactPerson: c.contactPerson || first.name || '',
+      email: c.email || first.email || '',
+    };
+  });
+}
+
 function load() {
   try {
     const raw = localStorage.getItem(KEY);
@@ -39,7 +54,7 @@ function load() {
       ...DEFAULT_STATE,
       ...parsed,
       sender: { ...DEFAULT_STATE.sender, ...(parsed.sender || {}) },
-      contacts: parsed.contacts || seedContacts(),
+      contacts: fillBookingInfo(parsed.contacts || seedContacts()),
     };
   } catch {
     return { ...DEFAULT_STATE, contacts: seedContacts() };

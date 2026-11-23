@@ -5,6 +5,8 @@ import AdminGate from '../admin/AdminGate';
 import AdminChecklist, { itemStatus, relativeText } from '../admin/AdminChecklist';
 import AdminTemplates from '../admin/AdminTemplates';
 import AdminContacts, { STATUSES } from '../admin/AdminContacts';
+import AdminArtists from '../admin/AdminArtists';
+import AdminSponsors from '../admin/AdminSponsors';
 import useAdminStore, { formatDate, daysFromToday } from '../admin/useAdminStore';
 import { CHECKLIST, CATEGORIES } from '../admin/checklistData';
 import { Button, Field, Panel, inputClass } from '../admin/ui';
@@ -12,6 +14,8 @@ import { Button, Field, Panel, inputClass } from '../admin/ui';
 const TABS = [
   { id: 'oversikt', label: 'Oversikt' },
   { id: 'sjekkliste', label: 'Sjekkliste' },
+  { id: 'artister', label: 'Artister' },
+  { id: 'sponsorer', label: 'Sponsorer' },
   { id: 'foresporsler', label: 'Forespørsler' },
   { id: 'kontakter', label: 'Kontakter' },
   { id: 'innstillinger', label: 'Innstillinger' },
@@ -285,10 +289,18 @@ function AdminApp() {
     return TABS.some((t) => t.id === h) ? h : 'oversikt';
   });
 
+  const [preset, setPreset] = useState(null);
+
   const go = (id) => {
+    if (id !== 'foresporsler') setPreset(null);
     setTab(id);
     window.history.replaceState(null, '', `#${id}`);
     window.scrollTo({ top: 0 });
+  };
+
+  const writeRequest = (p) => {
+    go('foresporsler');
+    setPreset(p);
   };
 
   return (
@@ -336,7 +348,20 @@ function AdminApp() {
         )}
         {tab === 'oversikt' && <Overview state={store.state} setTab={go} />}
         {tab === 'sjekkliste' && <AdminChecklist state={store.state} setItem={store.setItem} />}
-        {tab === 'foresporsler' && <AdminTemplates state={store.state} upsertContact={store.upsertContact} />}
+        {tab === 'artister' && (
+          <AdminArtists state={store.state} upsertContact={store.upsertContact} onWriteRequest={writeRequest} />
+        )}
+        {tab === 'sponsorer' && (
+          <AdminSponsors state={store.state} upsertContact={store.upsertContact} onWriteRequest={writeRequest} />
+        )}
+        {tab === 'foresporsler' && (
+          <AdminTemplates
+            key={preset ? JSON.stringify(preset) : 'tom'}
+            state={store.state}
+            upsertContact={store.upsertContact}
+            preset={preset}
+          />
+        )}
         {tab === 'kontakter' && (
           <AdminContacts state={store.state} upsertContact={store.upsertContact} removeContact={store.removeContact} />
         )}
