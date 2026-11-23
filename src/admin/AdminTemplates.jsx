@@ -9,9 +9,9 @@ function addDays(n) {
   return d.toISOString().slice(0, 10);
 }
 
-export default function AdminTemplates({ state, upsertContact }) {
-  const [templateId, setTemplateId] = useState('artist');
-  const [values, setValues] = useState({ tier: SPONSOR_TIERS[0].name, fee: 'etter avtale' });
+export default function AdminTemplates({ state, upsertContact, preset }) {
+  const [templateId, setTemplateId] = useState(preset?.templateId || 'artist');
+  const [values, setValues] = useState({ tier: SPONSOR_TIERS[0].name, fee: 'etter avtale', ...(preset?.values || {}) });
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
   const [edited, setEdited] = useState(false);
