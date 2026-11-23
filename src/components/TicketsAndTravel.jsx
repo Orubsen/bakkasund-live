@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
 import { Ticket, Ship, MapPin, Sparkles, CheckCircle, Clock, ShieldCheck, Mail, ArrowRight, Star } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { submitNetlifyForm } from '../utils/netlifyForm';
 
 export default function TicketsAndTravel() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [ticketInterest, setTicketInterest] = useState('Festivalpass (2 dager)');
   const [subscribed, setSubscribed] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState('');
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
     if (!email.trim()) return;
+    setSendError('');
+    setSending(true);
+    try {
+      await submitNetlifyForm('billettvarsel', { name, email, ticketInterest }, 'bakkasund_newsletter');
+    } catch {
+      setSending(false);
+      setSendError('Vi fikk ikke registrert deg. Sjekk nettforbindelsen og prøv igjen.');
+      return;
+    }
+    setSending(false);
 
     confetti({
       particleCount: 70,
@@ -20,9 +33,6 @@ export default function TicketsAndTravel() {
     });
 
     setSubscribed(true);
-    const subscribers = JSON.parse(localStorage.getItem('bakkasund_newsletter') || '[]');
-    subscribers.push({ name, email, ticketInterest, date: new Date().toISOString() });
-    localStorage.setItem('bakkasund_newsletter', JSON.stringify(subscribers));
   };
 
   const tickets = [
@@ -226,6 +236,8 @@ export default function TicketsAndTravel() {
                 type="text"
                 required
                 placeholder="Ditt fulle navn"
+                aria-label="Navn"
+                autoComplete="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#F79D1B] text-sm"
@@ -234,15 +246,18 @@ export default function TicketsAndTravel() {
                 type="email"
                 required
                 placeholder="Din e-postadresse"
+                aria-label="E-post"
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#F79D1B] text-sm"
               />
             </div>
 
-            <div className="flex items-center justify-between gap-3 text-left px-2 pt-1">
-              <span className="text-[11px] text-[#F3E9D2]/70">Ønsket billett:</span>
-              <div className="flex gap-3 text-xs">
+            <fieldset className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 text-left px-2 pt-1">
+              <legend className="sr-only">Ønsket billett</legend>
+              <span aria-hidden="true" className="text-xs text-[#F3E9D2]/70">Ønsket billett:</span>
+              <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm">
                 <label className="flex items-center gap-1.5 cursor-pointer text-white">
                   <input
                     type="radio"
@@ -277,14 +292,18 @@ export default function TicketsAndTravel() {
                   VIP (2 099,-)
                 </label>
               </div>
-            </div>
+            </fieldset>
 
+            {sendError && (
+              <p role="alert" className="text-sm text-[#ffb4a8]">{sendError}</p>
+            )}
             <button
               type="submit"
+              disabled={sending}
               className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#F79D1B] to-[#ffaa2b] text-[#0D1B2A] font-bold text-xs uppercase tracking-wider shadow-lg hover:brightness-110 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
             >
               <Mail className="w-4 h-4" />
-              <span>Sikre meg tidlig tilgang</span>
+              <span>{sending ? 'Registrerer …' : 'Varsle meg når salget åpner'}</span>
             </button>
           </form>
         )}

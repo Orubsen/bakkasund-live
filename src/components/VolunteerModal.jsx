@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { X, HeartHandshake, CheckCircle2, Sparkles, Shield, Beer, Mic2, Anchor, Hammer, Trash2 } from 'lucide-react';
+import { submitNetlifyForm } from '../utils/netlifyForm';
+import useModalA11y from '../hooks/useModalA11y';
 import confetti from 'canvas-confetti';
 
 export default function VolunteerModal({ isOpen, onClose }) {
@@ -15,10 +17,24 @@ export default function VolunteerModal({ isOpen, onClose }) {
     comments: '',
   });
 
+  const dialogRef = useModalA11y(isOpen, onClose);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState('');
+
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSendError('');
+    setSending(true);
+    try {
+      await submitNetlifyForm('frivillig', formData, 'bakkasund_volunteers');
+    } catch {
+      setSending(false);
+      setSendError('Vi fikk ikke sendt skjemaet. Sjekk nettforbindelsen og prøv igjen, eller send e-post til roger.alraek@gmail.com.');
+      return;
+    }
+    setSending(false);
 
     confetti({
       particleCount: 80,
@@ -27,9 +43,6 @@ export default function VolunteerModal({ isOpen, onClose }) {
       colors: ['#F79D1B', '#6EC1C6', '#1E6070'],
     });
 
-    const volunteers = JSON.parse(localStorage.getItem('bakkasund_volunteers') || '[]');
-    volunteers.push({ ...formData, submittedAt: new Date().toISOString() });
-    localStorage.setItem('bakkasund_volunteers', JSON.stringify(volunteers));
 
     setSubmitted(true);
     setTimeout(() => {
@@ -47,11 +60,11 @@ export default function VolunteerModal({ isOpen, onClose }) {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-[#0D1B2A] border-2 border-[#6EC1C6]/40 rounded-3xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9)] my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto" role="dialog" aria-modal="true" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="relative w-full max-w-2xl bg-[#0D1B2A] border-2 border-[#6EC1C6]/40 rounded-3xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9)] my-8" ref={dialogRef} tabIndex={-1}>
         {/* Close Button */}
         <button
-          onClick={onClose}
+          onClick={onClose} aria-label="Lukk" data-close
           className="absolute top-5 right-5 p-2 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/15 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
@@ -248,11 +261,17 @@ export default function VolunteerModal({ isOpen, onClose }) {
                 </button>
                 <button
                   type="submit"
-                  className="px-7 py-3 rounded-xl bg-gradient-to-r from-[#F79D1B] to-[#ffaa2b] text-[#0D1B2A] font-bold text-xs uppercase tracking-wider shadow-lg hover:brightness-110 cursor-pointer"
+                  disabled={sending}
+                  className="px-7 py-3 rounded-xl bg-gradient-to-r from-[#F79D1B] to-[#ffaa2b] text-[#0D1B2A] font-bold text-xs uppercase tracking-wider shadow-lg hover:brightness-110 cursor-pointer disabled:opacity-60 disabled:cursor-wait"
                 >
-                  Send Inn Frivilligsøknad
+                  {sending ? 'Sender …' : 'Send søknad som frivillig'}
                 </button>
               </div>
+              {sendError && (
+                <p role="alert" className="text-sm text-[#ffb4a8] bg-[#5a1d14]/40 border border-[#ffb4a8]/40 rounded-xl px-4 py-3">
+                  {sendError}
+                </p>
+              )}
             </form>
           </>
         )}

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { X, Briefcase, CheckCircle2, Building, Sparkles, Award, Shield, ArrowRight } from 'lucide-react';
+import { submitNetlifyForm } from '../utils/netlifyForm';
+import useModalA11y from '../hooks/useModalA11y';
 import confetti from 'canvas-confetti';
 
 export default function PartnersModal({ isOpen, onClose }) {
@@ -13,10 +15,24 @@ export default function PartnersModal({ isOpen, onClose }) {
     message: '',
   });
 
+  const dialogRef = useModalA11y(isOpen, onClose);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState('');
+
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSendError('');
+    setSending(true);
+    try {
+      await submitNetlifyForm('sponsor', formData, 'bakkasund_sponsors');
+    } catch {
+      setSending(false);
+      setSendError('Vi fikk ikke sendt skjemaet. Sjekk nettforbindelsen og prøv igjen, eller send e-post til roger.alraek@gmail.com.');
+      return;
+    }
+    setSending(false);
 
     confetti({
       particleCount: 60,
@@ -25,9 +41,6 @@ export default function PartnersModal({ isOpen, onClose }) {
       colors: ['#F79D1B', '#6EC1C6', '#F3E9D2'],
     });
 
-    const sponsors = JSON.parse(localStorage.getItem('bakkasund_sponsors') || '[]');
-    sponsors.push({ ...formData, submittedAt: new Date().toISOString() });
-    localStorage.setItem('bakkasund_sponsors', JSON.stringify(sponsors));
 
     setSubmitted(true);
   };
@@ -56,10 +69,10 @@ export default function PartnersModal({ isOpen, onClose }) {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-[#0D1B2A] border-2 border-[#F79D1B]/50 rounded-3xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9)] my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto" role="dialog" aria-modal="true" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="relative w-full max-w-2xl bg-[#0D1B2A] border-2 border-[#F79D1B]/50 rounded-3xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9)] my-8" ref={dialogRef} tabIndex={-1}>
         <button
-          onClick={onClose}
+          onClick={onClose} aria-label="Lukk" data-close
           className="absolute top-5 right-5 p-2 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/15 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
@@ -228,12 +241,18 @@ export default function PartnersModal({ isOpen, onClose }) {
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#F79D1B] to-[#ffaa2b] text-[#0D1B2A] font-bold text-xs uppercase tracking-wider shadow-lg hover:brightness-110 cursor-pointer"
+                    disabled={sending}
+                    className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#F79D1B] to-[#ffaa2b] text-[#0D1B2A] font-bold text-xs uppercase tracking-wider shadow-lg hover:brightness-110 cursor-pointer disabled:opacity-60 disabled:cursor-wait"
                   >
-                    Send Forespørsel
+                    {sending ? 'Sender …' : 'Send forespørsel'}
                   </button>
                 </div>
               </div>
+              {sendError && (
+                <p role="alert" className="text-sm text-[#ffb4a8] bg-[#5a1d14]/40 border border-[#ffb4a8]/40 rounded-xl px-4 py-3">
+                  {sendError}
+                </p>
+              )}
             </form>
           </>
         )}

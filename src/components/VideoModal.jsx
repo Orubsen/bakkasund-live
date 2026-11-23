@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { X, Play, Film, Compass, Video } from 'lucide-react';
+import useModalA11y from '../hooks/useModalA11y';
 
 export default function VideoModal({ isOpen, onClose }) {
   const [selectedVideo, setSelectedVideo] = useState(0);
   const videoRef = useRef(null);
 
+  const dialogRef = useModalA11y(isOpen, onClose);
   if (!isOpen) return null;
 
   const playlist = [
@@ -25,8 +27,8 @@ export default function VideoModal({ isOpen, onClose }) {
   const current = playlist[selectedVideo] || playlist[0];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl animate-fade-in">
-      <div className="relative w-full max-w-4xl bg-[#0D1B2A] border border-white/20 rounded-3xl overflow-hidden shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl animate-fade-in" role="dialog" aria-modal="true" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="relative w-full max-w-4xl bg-[#0D1B2A] border border-white/20 rounded-3xl overflow-hidden shadow-2xl" ref={dialogRef} tabIndex={-1}>
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black/40">
           <div className="flex items-center gap-3">

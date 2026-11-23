@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/jpeg" href="/assets/logo.jpg" />
+    <meta name="theme-color" content="#0D1B2A" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bakkasund LIVE 2027 • Musikk mellom holmer og hav</title>
     <meta name="description" content="Bakkasund LIVE 2027 på Kassholmen i Austevoll. En eksklusiv kystfestival med musikk, kyst og opplevelser. Begrenset til 600 billetter." />
@@ -17,6 +18,13 @@
   </head>
   <body class="bg-[#0D1B2A] text-[#F3E9D2] antialiased selection:bg-[#F79D1B] selection:text-[#0D1B2A] overflow-x-hidden">
     <div id="root"></div>
+    <!-- Skjulte skjema slik at Netlify Forms oppdager feltene ved bygg. Innsendinger skjer fra React. -->
+    <div hidden aria-hidden="true">
+      <form name="sponsor" data-netlify="true" netlify-honeypot="bot-field"><input name="bot-field" /><input name="companyName" /><input name="contactPerson" /><input name="email" /><input name="phone" /><input name="tier" /><textarea name="message"></textarea></form>
+      <form name="frivillig" data-netlify="true" netlify-honeypot="bot-field"><input name="bot-field" /><input name="name" /><input name="phone" /><input name="email" /><input name="age" /><input name="role" /><input name="tshirtSize" /><textarea name="experience"></textarea><textarea name="comments"></textarea></form>
+      <form name="matleverandor" data-netlify="true" netlify-honeypot="bot-field"><input name="bot-field" /><input name="businessName" /><input name="contactName" /><input name="email" /><input name="phone" /><input name="category" /><textarea name="menuHighlights"></textarea><textarea name="rigRequirements"></textarea></form>
+      <form name="billettvarsel" data-netlify="true" netlify-honeypot="bot-field"><input name="bot-field" /><input name="name" /><input name="email" /><input name="ticketInterest" /></form>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
     <script>
       if (window.netlifyIdentity) {

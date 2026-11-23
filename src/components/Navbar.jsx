@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Volume2, VolumeX, Menu, X, Sparkles, Anchor, ChevronDown, Utensils, Briefcase, HeartHandshake, User } from 'lucide-react';
 import { coastalAudio } from '../utils/audioSynth';
@@ -16,6 +16,27 @@ export default function Navbar({ onOpenVolunteer, onOpenSponsor, onOpenVendor, u
   const [menuOpen, setMenuOpen] = useState(false);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [partnerDropdown, setPartnerDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Lukk menyen ved klikk utenfor eller Esc
+  useEffect(() => {
+    if (!partnerDropdown && !menuOpen) return undefined;
+    const onDown = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) setPartnerDropdown(false);
+    };
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        setPartnerDropdown(false);
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [partnerDropdown, menuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -89,8 +110,10 @@ export default function Navbar({ onOpenVolunteer, onOpenSponsor, onOpenVendor, u
           </NavLink>
 
           {/* Partner & Mat/Drikke Dropdown */}
-          <div className="relative">
+          <div className="relative" ref={dropdownRef} onMouseLeave={() => setPartnerDropdown(false)}>
             <button
+              aria-expanded={partnerDropdown}
+              aria-haspopup="true"
               onClick={() => setPartnerDropdown(!partnerDropdown)}
               onMouseEnter={() => setPartnerDropdown(true)}
               className="text-[#F3E9D2]/90 hover:text-[#F79D1B] transition-colors py-1 cursor-pointer flex items-center gap-1 text-[13px] font-medium"
@@ -101,8 +124,10 @@ export default function Navbar({ onOpenVolunteer, onOpenSponsor, onOpenVendor, u
 
             {partnerDropdown && (
               <div
-                onMouseLeave={() => setPartnerDropdown(false)}
-                className="absolute top-full left-0 mt-2 w-56 rounded-2xl bg-[#0D1B2A] border border-[#1E6070] shadow-2xl p-2 space-y-1 animate-fade-in"
+                className="absolute top-full left-0 pt-2"
+              >
+              <div
+                className=" w-56 rounded-2xl bg-[#0D1B2A] border border-[#1E6070] shadow-2xl p-2 space-y-1 animate-fade-in"
               >
                 <button
                   onClick={() => {
@@ -146,6 +171,7 @@ export default function Navbar({ onOpenVolunteer, onOpenSponsor, onOpenVendor, u
                   </div>
                 </button>
               </div>
+              </div>
             )}
           </div>
 
@@ -159,6 +185,7 @@ export default function Navbar({ onOpenVolunteer, onOpenSponsor, onOpenVendor, u
           {/* Sound Toggle (Ambient ocean waves) */}
           <button
             onClick={handleToggleAudio}
+            aria-pressed={audioPlaying}
             title={audioPlaying ? 'Demp kystlyd' : 'Lytt til havet (bølger & stemning)'}
             className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
               audioPlaying
@@ -214,6 +241,8 @@ export default function Navbar({ onOpenVolunteer, onOpenSponsor, onOpenVendor, u
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Lukk meny' : 'Åpne meny'}
+            aria-expanded={menuOpen}
             className="p-2 rounded-xl bg-white/10 text-white xl:hidden hover:bg-white/20 transition-colors cursor-pointer"
           >
             {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
