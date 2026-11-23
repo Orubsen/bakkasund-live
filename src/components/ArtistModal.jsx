@@ -99,7 +99,7 @@ export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted 
           )}
 
           {/* Known Hits */}
-          {artist.hits && (
+          {artist.hits?.length > 0 && (
             <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
               <span className="text-[11px] uppercase font-bold text-sol block mb-2">
                 Kjente låter & utgivelser
