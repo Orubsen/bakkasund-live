@@ -4,11 +4,11 @@ import { Button, Field, Panel, inputClass } from './ui';
 import { daysFromToday } from './useAdminStore';
 
 export const STATUSES = [
-  { id: 'ikke-kontaktet', label: 'Ikke kontaktet', tone: 'text-[#F3E9D2]/60' },
-  { id: 'sendt', label: 'Forespørsel sendt', tone: 'text-[#F79D1B]' },
-  { id: 'dialog', label: 'I dialog', tone: 'text-[#6EC1C6]' },
+  { id: 'ikke-kontaktet', label: 'Ikke kontaktet', tone: 'text-papir/60' },
+  { id: 'sendt', label: 'Forespørsel sendt', tone: 'text-sol' },
+  { id: 'dialog', label: 'I dialog', tone: 'text-sjo' },
   { id: 'avtale', label: 'Avtale', tone: 'text-[#8be0a4]' },
-  { id: 'avslatt', label: 'Takket nei', tone: 'text-[#F3E9D2]/40' },
+  { id: 'avslatt', label: 'Takket nei', tone: 'text-papir/40' },
 ];
 
 const TYPES = [
@@ -34,9 +34,9 @@ function exportCsv(contacts) {
 function followUpText(date) {
   if (!date) return null;
   const diff = daysFromToday(new Date(`${date}T12:00:00`));
-  if (diff < 0) return { text: `Følg opp nå (${Math.abs(diff)} dager over)`, tone: 'text-[#ffb4a8]' };
-  if (diff === 0) return { text: 'Følg opp i dag', tone: 'text-[#F79D1B]' };
-  return { text: `Følg opp om ${diff} dager`, tone: 'text-[#F3E9D2]/60' };
+  if (diff < 0) return { text: `Følg opp nå (${Math.abs(diff)} dager over)`, tone: 'text-korall' };
+  if (diff === 0) return { text: 'Følg opp i dag', tone: 'text-sol' };
+  return { text: `Følg opp om ${diff} dager`, tone: 'text-papir/60' };
 }
 
 export default function AdminContacts({ state, upsertContact, removeContact }) {
@@ -72,7 +72,7 @@ export default function AdminContacts({ state, upsertContact, removeContact }) {
               aria-selected={type === t.id}
               onClick={() => setType(t.id)}
               className={`px-4 py-2 rounded-full text-sm font-semibold border cursor-pointer ${
-                type === t.id ? 'bg-[#F3E9D2] text-[#0D1B2A] border-[#F3E9D2]' : 'border-[#2B4A63] text-[#F3E9D2]/80 hover:text-white'
+                type === t.id ? 'bg-papir text-blekk border-papir' : 'border-linje-2 text-papir/80 hover:text-white'
               }`}
             >
               {t.label} <span className="opacity-70">{state.contacts.filter((c) => c.type === t.id).length}</span>
@@ -104,7 +104,7 @@ export default function AdminContacts({ state, upsertContact, removeContact }) {
       </Panel>
 
       {list.length === 0 ? (
-        <p className="rounded-xl border border-dashed border-[#2B4A63] p-6 text-[15px] text-[#F3E9D2]/70">
+        <p className="rounded-xl border border-dashed border-linje-2 p-6 text-[15px] text-papir/70">
           {type === 'sponsor'
             ? 'Ingen sponsorer i listen ennå. Legg til bedrifter over, eller bruk sponsormalen under Forespørsler og trykk «Logg som sendt».'
             : 'Ingen artister i listen. Legg til en over.'}
@@ -114,15 +114,15 @@ export default function AdminContacts({ state, upsertContact, removeContact }) {
           {list.map((c) => {
             const fu = c.status === 'avtale' || c.status === 'avslatt' ? null : followUpText(c.nextFollowUp);
             return (
-              <li key={c.id} className="relative rounded-xl border border-[#1E3A52] bg-[#0F2133] p-4 grid grid-cols-2 gap-3 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-center">
+              <li key={c.id} className="relative rounded-xl border border-linje bg-[#0F2133] p-4 grid grid-cols-2 gap-3 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)_auto] md:items-center">
                 <div className="min-w-0 col-span-2 md:col-span-1 pr-10 md:pr-0">
                   <p className="text-[15px] font-semibold text-white truncate">{c.name}</p>
-                  <p className="text-[13px] text-[#F3E9D2]/60 truncate">
+                  <p className="text-[13px] text-papir/60 truncate">
                     {[c.contactPerson, c.email].filter(Boolean).join(', ') || c.note || 'Ingen kontaktinfo ennå'}
                   </p>
                   {fu && <p className={`text-[13px] mt-0.5 ${fu.tone}`}>{fu.text}</p>}
                 </div>
-                <label className="text-[13px] text-[#F3E9D2]/60">
+                <label className="text-[13px] text-papir/60">
                   <span className="block mb-1">Status</span>
                   <select
                     value={c.status}
@@ -134,7 +134,7 @@ export default function AdminContacts({ state, upsertContact, removeContact }) {
                     ))}
                   </select>
                 </label>
-                <label className="text-[13px] text-[#F3E9D2]/60">
+                <label className="text-[13px] text-papir/60">
                   <span className="block mb-1">Neste oppfølging</span>
                   <input
                     type="date"

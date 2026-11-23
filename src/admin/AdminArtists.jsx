@@ -16,8 +16,8 @@ const SIZE_FILTERS = [
 
 function shareTone(pct) {
   if (pct <= 20) return 'text-[#8be0a4]';
-  if (pct <= 45) return 'text-[#F79D1B]';
-  return 'text-[#ffb4a8]';
+  if (pct <= 45) return 'text-sol';
+  return 'text-korall';
 }
 
 function host(url) {
@@ -61,7 +61,7 @@ export default function AdminArtists({ state, upsertContact, onWriteRequest }) {
     <div className="space-y-6">
       <Panel title="Før dere spør">
         <div className="grid md:grid-cols-[minmax(0,1fr)_260px] gap-6">
-          <div className="space-y-3 text-[15px] leading-relaxed text-[#F3E9D2]/85">
+          <div className="space-y-3 text-[15px] leading-relaxed text-papir/85">
             <p>
               Kontaktinfo er hentet fra artistenes og byråenes egne sider 23. november 2026. Honorarene er{' '}
               <strong className="text-white">anslag</strong>, ikke priser: byråene publiserer ikke honorarer, og
@@ -71,10 +71,10 @@ export default function AdminArtists({ state, upsertContact, onWriteRequest }) {
               Norske arrangører brukte i snitt 68 % av billettinntektene på artister i 2024. Med {CAPACITY} gjester
               blir regnestykket stramt for de største navnene, så sponsorinntekter avgjør hvem dere kan booke.
             </p>
-            <ul className="text-[13px] text-[#F3E9D2]/60 space-y-1">
+            <ul className="text-[13px] text-papir/60 space-y-1">
               {FEE_SOURCES.map((s) => (
                 <li key={s.url}>
-                  <a href={s.url} target="_blank" rel="noreferrer" className="text-[#6EC1C6] hover:underline">
+                  <a href={s.url} target="_blank" rel="noreferrer" className="text-sjo hover:underline">
                     {s.label}
                   </a>
                   : {s.note}
@@ -82,7 +82,7 @@ export default function AdminArtists({ state, upsertContact, onWriteRequest }) {
               ))}
             </ul>
           </div>
-          <div className="rounded-xl bg-[#0D1B2A] border border-[#1E3A52] p-4 space-y-3 self-start">
+          <div className="rounded-xl bg-blekk border border-linje p-4 space-y-3 self-start">
             <Field label="Billettpris (kr)" hint="Brukes til å regne ut hvor stor del av billettinntekten honoraret tar.">
               <input
                 type="number"
@@ -110,14 +110,14 @@ export default function AdminArtists({ state, upsertContact, onWriteRequest }) {
               aria-selected={size === f.id}
               onClick={() => setSize(f.id)}
               className={`px-4 py-2 rounded-full text-sm font-semibold border cursor-pointer ${
-                size === f.id ? 'bg-[#F3E9D2] text-[#0D1B2A] border-[#F3E9D2]' : 'border-[#2B4A63] text-[#F3E9D2]/80 hover:text-white'
+                size === f.id ? 'bg-papir text-blekk border-papir' : 'border-linje-2 text-papir/80 hover:text-white'
               }`}
             >
               {f.label}
             </button>
           ))}
         </div>
-        <p aria-live="polite" className="text-sm text-[#6EC1C6] min-h-5">{feedback}</p>
+        <p aria-live="polite" className="text-sm text-sjo min-h-5">{feedback}</p>
       </div>
 
       <ul className="grid lg:grid-cols-2 gap-4">
@@ -125,11 +125,11 @@ export default function AdminArtists({ state, upsertContact, onWriteRequest }) {
           const b = a.booking;
           const share = revenue ? Math.round(((b.fee[0] + b.fee[1]) / 2 / revenue) * 100) : null;
           return (
-            <li key={a.id} className="rounded-2xl bg-[#13263A] border border-[#1E3A52] p-5 flex flex-col gap-4">
+            <li key={a.id} className="rounded-2xl bg-dyp border border-linje p-5 flex flex-col gap-4">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <h3 className="font-['Oswald'] text-xl font-semibold text-white">{a.name}</h3>
-                  <p className="text-[13px] text-[#F3E9D2]/60">
+                  <h3 className="font-display text-xl font-semibold text-white">{a.name}</h3>
+                  <p className="text-[13px] text-papir/60">
                     {a.genre}, {SIZE_LABEL[b.size].toLowerCase()}
                   </p>
                 </div>
@@ -137,7 +137,7 @@ export default function AdminArtists({ state, upsertContact, onWriteRequest }) {
                   <p className="text-[15px] font-semibold text-white">
                     {formatNok(b.fee[0])} til {formatNok(b.fee[1])}
                   </p>
-                  <p className="text-[12px] text-[#F3E9D2]/55">anslått honorar</p>
+                  <p className="text-[12px] text-papir/55">anslått honorar</p>
                   {share !== null && (
                     <p className={`text-[13px] mt-0.5 ${shareTone(share)}`}>ca. {share} % av billettinntekten</p>
                   )}
@@ -145,22 +145,22 @@ export default function AdminArtists({ state, upsertContact, onWriteRequest }) {
               </div>
 
               <div>
-                <p className="text-sm font-semibold text-[#F3E9D2]">{b.agency}</p>
+                <p className="text-sm font-semibold text-papir">{b.agency}</p>
                 {b.contacts.length > 0 && (
                   <ul className="mt-2 space-y-2">
                     {b.contacts.map((c) => (
                       <li key={`${c.role}-${c.email}-${c.phone}`} className="text-[14px]">
-                        <span className="text-[#F3E9D2]/60">{c.role}{c.name ? ': ' : ''}</span>
+                        <span className="text-papir/60">{c.role}{c.name ? ': ' : ''}</span>
                         <span className="text-white">{c.name}</span>
                         <span className="flex flex-wrap gap-x-4 gap-y-1 mt-0.5">
                           {c.email && (
-                            <a href={`mailto:${c.email}`} className="inline-flex items-center gap-1.5 text-[#6EC1C6] hover:underline break-all">
+                            <a href={`mailto:${c.email}`} className="inline-flex items-center gap-1.5 text-sjo hover:underline break-all">
                               <Mail className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                               {c.email}
                             </a>
                           )}
                           {c.phone && (
-                            <a href={`tel:${c.phone.replace(/\s/g, '')}`} className="inline-flex items-center gap-1.5 text-[#6EC1C6] hover:underline">
+                            <a href={`tel:${c.phone.replace(/\s/g, '')}`} className="inline-flex items-center gap-1.5 text-sjo hover:underline">
                               <Phone className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                               {c.phone}
                             </a>
@@ -173,19 +173,19 @@ export default function AdminArtists({ state, upsertContact, onWriteRequest }) {
               </div>
 
               {b.caution && (
-                <p className="flex gap-2 text-[13px] text-[#F79D1B] leading-relaxed">
+                <p className="flex gap-2 text-[13px] text-sol leading-relaxed">
                   <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
                   {b.caution}
                 </p>
               )}
 
               <div className="text-[14px] leading-relaxed space-y-2">
-                <ul className="list-disc pl-5 text-[#F3E9D2]/80 space-y-1">
+                <ul className="list-disc pl-5 text-papir/80 space-y-1">
                   {b.practical.map((p) => (
                     <li key={p}>{p}</li>
                   ))}
                 </ul>
-                <p className="text-[#F3E9D2]/85">
+                <p className="text-papir/85">
                   <span className="font-semibold text-white">Vinkel i forespørselen: </span>
                   {b.angle}
                 </p>
@@ -212,10 +212,10 @@ export default function AdminArtists({ state, upsertContact, onWriteRequest }) {
                   <UserCheck className="w-4 h-4" aria-hidden="true" />
                   Oppdater kontakt
                 </Button>
-                <span className="text-[12px] text-[#F3E9D2]/50 flex flex-wrap gap-x-3">
+                <span className="text-[12px] text-papir/50 flex flex-wrap gap-x-3">
                   Kilde:
                   {b.sources.map((s) => (
-                    <a key={s} href={s} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[#6EC1C6] hover:underline">
+                    <a key={s} href={s} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-sjo hover:underline">
                       {host(s)}
                       <ExternalLink className="w-3 h-3" aria-hidden="true" />
                     </a>

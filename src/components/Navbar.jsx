@@ -1,32 +1,57 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { Volume2, VolumeX, Menu, X, Sparkles, Anchor, ChevronDown, Utensils, Briefcase, HeartHandshake, User } from 'lucide-react';
+import { NavLink, Link, useLocation } from 'react-router-dom';
+import { Volume2, VolumeX, Menu, X, ChevronDown, UserRound } from 'lucide-react';
 import { coastalAudio } from '../utils/audioSynth';
+import Wordmark from '../ui/Wordmark';
 
-function GithubIcon({ className = "w-4 h-4" }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-    </svg>
-  );
-}
+/*
+  Menyen ligger rett på papiret i toppen av hver side (blekk på papir), og blir en
+  blekkfarget list når du har blat forbi toppen.
+*/
+
+const lenker = [
+  { to: '/opplevelsen', tekst: 'Opplevelsen' },
+  { to: '/festivaloyen', tekst: 'Festivaløyen' },
+  { to: '/artister', tekst: 'Artister' },
+  { to: '/billetter', tekst: 'Billetter og reise' },
+  { to: '/kontakt', tekst: 'Kontakt' },
+];
 
 export default function Navbar({ onOpenVolunteer, onOpenSponsor, onOpenVendor, user, onOpenAuth }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [audioPlaying, setAudioPlaying] = useState(false);
-  const [partnerDropdown, setPartnerDropdown] = useState(false);
+  const [blimedOpen, setBlimedOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const location = useLocation();
 
-  // Lukk menyen ved klikk utenfor eller Esc
   useEffect(() => {
-    if (!partnerDropdown && !menuOpen) return undefined;
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Lukk menyer når siden byttes
+  useEffect(() => {
+    setMenuOpen(false);
+    setBlimedOpen(false);
+  }, [location.pathname]);
+
+  // Lås rulling bak mobilmenyen
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!blimedOpen && !menuOpen) return undefined;
     const onDown = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) setPartnerDropdown(false);
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) setBlimedOpen(false);
     };
     const onKey = (e) => {
       if (e.key === 'Escape') {
-        setPartnerDropdown(false);
+        setBlimedOpen(false);
         setMenuOpen(false);
       }
     };
@@ -36,330 +61,158 @@ export default function Navbar({ onOpenVolunteer, onOpenSponsor, onOpenVendor, u
       document.removeEventListener('mousedown', onDown);
       document.removeEventListener('keydown', onKey);
     };
-  }, [partnerDropdown, menuOpen]);
+  }, [blimedOpen, menuOpen]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const toggleAudio = () => setAudioPlaying(coastalAudio.toggle());
 
-  const handleToggleAudio = () => {
-    const state = coastalAudio.toggle();
-    setAudioPlaying(state);
-  };
+  const mork = scrolled || menuOpen;
+  const tone = mork ? 'text-papir' : 'text-blekk';
 
-  const navLinkClass = ({ isActive }) =>
-    `transition-colors py-1 px-1 border-b-2 text-[13px] font-medium ${
-      isActive
-        ? 'text-[#F79D1B] border-[#F79D1B] font-bold'
-        : 'text-[#F3E9D2]/90 border-transparent hover:text-[#F79D1B]'
-    }`;
+  const lenkeKlasse = ({ isActive }) =>
+    `relative py-2 text-[0.9375rem] font-semibold transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[2px] after:origin-left after:transition-transform after:duration-200 ${
+      mork ? 'after:bg-sol hover:text-sol-2' : 'after:bg-blekk hover:text-fjord'
+    } ${isActive ? 'after:scale-x-100' : 'after:scale-x-0 hover:after:scale-x-100'}`;
+
+  const blimed = [
+    { tekst: 'Bli frivillig', hint: 'Jobb et skift, få festivalpass', onClick: onOpenVolunteer },
+    { tekst: 'Bli sponsor', hint: 'Synlighet for lokalt næringsliv', onClick: onOpenSponsor },
+    { tekst: 'Selg mat og drikke', hint: 'Søk om plass på holmen', onClick: onOpenVendor },
+  ];
+
+  const ikonKnapp = `h-10 w-10 items-center justify-center rounded-md transition-colors ${
+    mork ? 'hover:bg-white/10' : 'hover:bg-blekk/10'
+  }`;
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-[#0D1B2A]/95 backdrop-blur-md border-b border-[#1E6070]/30 shadow-2xl py-2.5'
-          : 'bg-gradient-to-b from-[#0D1B2A]/90 via-[#0D1B2A]/40 to-transparent py-4'
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,padding] duration-300 ${tone} ${
+        mork ? 'bg-blekk/95 backdrop-blur-sm shadow-[0_1px_0_var(--color-linje)] py-2' : 'bg-transparent py-4'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand Logo */}
-        <Link to="/" className="flex items-center gap-2.5 group shrink-0">
-          <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#F79D1B] shadow-[0_0_15px_rgba(247,157,27,0.4)] group-hover:scale-105 transition-transform bg-[#0D1B2A]">
-            <img
-              src="/assets/logo.jpg"
-              alt="Bakkasund LIVE Logo"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div>
-            <div className="flex items-baseline gap-1">
-              <span className="font-['Oswald'] text-xl sm:text-2xl tracking-wider text-white font-bold uppercase drop-shadow leading-none">
-                BAKKASUND
-              </span>
-              <span className="font-['Kaushan_Script'] text-[#F79D1B] text-lg sm:text-xl transform -rotate-6">
-                Live
-              </span>
-            </div>
-            <p className="text-[9px] tracking-widest text-[#6EC1C6] uppercase font-semibold">
-              Kassholmen • 2027
-            </p>
-          </div>
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <Link to="/" className="shrink-0" aria-label="Bakkasund Live, til forsiden">
+          <Wordmark tone={mork ? 'papir' : 'blekk'} />
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden xl:flex items-center gap-5">
-          <NavLink to="/" end className={navLinkClass}>
-            Hjem
-          </NavLink>
-          <NavLink to="/opplevelsen" className={navLinkClass}>
-            Opplevelsen
-          </NavLink>
-          <NavLink to="/festivaloyen" className={navLinkClass}>
-            Festivaløyen
-          </NavLink>
-          <NavLink to="/artister" className={navLinkClass}>
-            Foreslå artist
-          </NavLink>
-          <NavLink to="/billetter" className={navLinkClass}>
-            Billetter & reiser
-          </NavLink>
+        <nav className="hidden xl:flex items-center gap-7" aria-label="Hovedmeny">
+          {lenker.map((l) => (
+            <NavLink key={l.to} to={l.to} className={lenkeKlasse}>{l.tekst}</NavLink>
+          ))}
 
-          {/* Partner & Mat/Drikke Dropdown */}
-          <div className="relative" ref={dropdownRef} onMouseLeave={() => setPartnerDropdown(false)}>
+          <div className="relative" ref={dropdownRef}>
             <button
-              aria-expanded={partnerDropdown}
-              aria-haspopup="true"
-              onClick={() => setPartnerDropdown(!partnerDropdown)}
-              onMouseEnter={() => setPartnerDropdown(true)}
-              className="text-[#F3E9D2]/90 hover:text-[#F79D1B] transition-colors py-1 cursor-pointer flex items-center gap-1 text-[13px] font-medium"
+              type="button"
+              aria-expanded={blimedOpen}
+              aria-controls="blimed-meny"
+              onClick={() => setBlimedOpen((v) => !v)}
+              className={`flex items-center gap-1 py-2 text-[0.9375rem] font-semibold cursor-pointer transition-colors ${mork ? 'hover:text-sol-2' : 'hover:text-fjord'}`}
             >
-              <span>Næring & servering</span>
-              <ChevronDown className="w-3.5 h-3.5 text-[#F79D1B]" />
+              Bli med
+              <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${blimedOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
             </button>
-
-            {partnerDropdown && (
-              <div
-                className="absolute top-full left-0 pt-2"
-              >
-              <div
-                className=" w-56 rounded-2xl bg-[#0D1B2A] border border-[#1E6070] shadow-2xl p-2 space-y-1 animate-fade-in"
-              >
-                <button
-                  onClick={() => {
-                    setPartnerDropdown(false);
-                    onOpenSponsor();
-                  }}
-                  className="w-full text-left p-2.5 rounded-xl hover:bg-white/10 text-xs text-white flex items-center gap-2.5 cursor-pointer transition-colors"
-                >
-                  <Briefcase className="w-4 h-4 text-[#F79D1B]" />
-                  <div>
-                    <div className="font-bold">Bli sponsor & partner</div>
-                    <div className="text-[10px] text-[#F3E9D2]/60">Næringslivspakker</div>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => {
-                    setPartnerDropdown(false);
-                    onOpenVendor();
-                  }}
-                  className="w-full text-left p-2.5 rounded-xl hover:bg-white/10 text-xs text-white flex items-center gap-2.5 cursor-pointer transition-colors"
-                >
-                  <Utensils className="w-4 h-4 text-[#6EC1C6]" />
-                  <div>
-                    <div className="font-bold">Mat & lokalt brygg</div>
-                    <div className="text-[10px] text-[#F3E9D2]/60">Salg & serveringstelt</div>
-                  </div>
-                </button>
-
-                <button
-                  onClick={() => {
-                    setPartnerDropdown(false);
-                    onOpenVolunteer();
-                  }}
-                  className="w-full text-left p-2.5 rounded-xl hover:bg-white/10 text-xs text-white flex items-center gap-2.5 cursor-pointer transition-colors"
-                >
-                  <HeartHandshake className="w-4 h-4 text-emerald-400" />
-                  <div>
-                    <div className="font-bold">Bli frivillig</div>
-                    <div className="text-[10px] text-[#F3E9D2]/60">Bli med på laget</div>
-                  </div>
-                </button>
-              </div>
+            {blimedOpen && (
+              <div id="blimed-meny" className="absolute right-0 top-full pt-3 w-72 animate-fade-in">
+                <ul className="rounded-xl bg-papir text-blekk shadow-[0_18px_40px_-12px_rgba(8,19,31,0.45)] ring-1 ring-blekk/10 p-2">
+                  {blimed.map((b) => (
+                    <li key={b.tekst}>
+                      <button
+                        type="button"
+                        onClick={() => { setBlimedOpen(false); b.onClick(); }}
+                        className="w-full text-left rounded-lg px-3 py-2.5 hover:bg-papir-2 cursor-pointer transition-colors"
+                      >
+                        <span className="block font-semibold">{b.tekst}</span>
+                        <span className="block text-sm text-dis">{b.hint}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>
-
-          <NavLink to="/kontakt" className={navLinkClass}>
-            Kontakt
-          </NavLink>
         </nav>
 
-        {/* Right Action Group */}
-        <div className="flex items-center gap-2.5 shrink-0">
-          {/* Sound Toggle (Ambient ocean waves) */}
+        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           <button
-            onClick={handleToggleAudio}
+            type="button"
+            onClick={toggleAudio}
             aria-pressed={audioPlaying}
-            title={audioPlaying ? 'Demp kystlyd' : 'Lytt til havet (bølger & stemning)'}
-            className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
-              audioPlaying
-                ? 'bg-[#1E6070] border-[#6EC1C6] text-white shadow-[0_0_12px_rgba(110,193,198,0.5)]'
-                : 'bg-white/5 border-white/15 text-[#F3E9D2]/80 hover:bg-white/10 hover:text-white'
-            }`}
+            aria-label={audioPlaying ? 'Skru av havlyd' : 'Skru på havlyd'}
+            title={audioPlaying ? 'Skru av havlyd' : 'Skru på havlyd'}
+            className={`hidden sm:inline-flex ${ikonKnapp} cursor-pointer`}
           >
-            {audioPlaying ? (
-              <>
-                <Volume2 className="w-3.5 h-3.5 text-[#F79D1B] animate-pulse" />
-                <span className="text-[#6EC1C6]">Kystlyd på</span>
-              </>
-            ) : (
-              <>
-                <VolumeX className="w-3.5 h-3.5" />
-                <span>Kystlyd</span>
-              </>
-            )}
+            {audioPlaying ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5 opacity-70" />}
           </button>
 
-          {/* GitHub / Netlify Login Button */}
           <button
+            type="button"
             onClick={onOpenAuth}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/15 border border-white/15 text-white text-xs font-semibold transition-all cursor-pointer shadow-md"
+            aria-label={user ? `Innlogget som ${user.name}` : 'Logg inn'}
+            title={user ? user.name : 'Logg inn'}
+            className={`inline-flex ${ikonKnapp} cursor-pointer`}
           >
-            {user ? (
-              <>
-                <img
-                  src={user.avatar || 'https://github.com/Orubsen.png'}
-                  alt={user.name}
-                  className="w-5 h-5 rounded-full border border-[#F79D1B]"
-                />
-                <span className="hidden md:inline text-[#F79D1B]">{user.name.split(' ')[0]}</span>
-              </>
+            {user?.avatar ? (
+              <img src={user.avatar} alt="" className="h-7 w-7 rounded-full ring-2 ring-sol object-cover" />
             ) : (
-              <>
-                <GithubIcon className="w-4 h-4 text-[#F79D1B]" />
-                <span className="hidden md:inline">Logg inn</span>
-              </>
+              <UserRound className="h-5 w-5" />
             )}
           </button>
 
-          {/* Billettvarsel CTA Button */}
-          <Link
-            to="/billetter"
-            className="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-full text-xs uppercase font-bold tracking-wider bg-gradient-to-r from-[#F79D1B] to-[#ffaa2b] text-[#0D1B2A] hover:brightness-110 shadow-[0_0_20px_rgba(247,157,27,0.35)] transition-all hover:scale-105 shrink-0"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Billetter 2027</span>
-            <span className="sm:hidden">Billetter</span>
+          <Link to="/billetter" className={`hidden sm:inline-flex knapp knapp-liten ${mork ? 'knapp-sol' : 'knapp-blekk'}`}>
+            Billetter
           </Link>
 
-          {/* Mobile Menu Toggle */}
           <button
-            onClick={() => setMenuOpen(!menuOpen)}
+            type="button"
+            onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? 'Lukk meny' : 'Åpne meny'}
             aria-expanded={menuOpen}
-            className="p-2 rounded-xl bg-white/10 text-white xl:hidden hover:bg-white/20 transition-colors cursor-pointer"
+            aria-controls="mobilmeny"
+            className={`inline-flex xl:hidden ${ikonKnapp} cursor-pointer`}
           >
-            {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
       {menuOpen && (
-        <div className="xl:hidden bg-[#0D1B2A]/98 backdrop-blur-2xl border-b border-[#1E6070]/40 px-6 py-6 space-y-4 animate-fade-in shadow-2xl">
-          <div className="flex flex-col space-y-3 pb-4 border-b border-white/10 text-sm">
-            <NavLink
-              to="/"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? 'text-[#F79D1B] font-bold' : 'text-[#F3E9D2]')}
-            >
-              Hjem
-            </NavLink>
-            <NavLink
-              to="/opplevelsen"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? 'text-[#F79D1B] font-bold' : 'text-[#F3E9D2]')}
-            >
-              Opplevelsen på Kassholmen
-            </NavLink>
-            <NavLink
-              to="/festivaloyen"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? 'text-[#F79D1B] font-bold' : 'text-[#F3E9D2]')}
-            >
-              Festivaløyen (Arenakart)
-            </NavLink>
-            <NavLink
-              to="/artister"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? 'text-[#F79D1B] font-bold' : 'text-[#F3E9D2]')}
-            >
-              Foreslå artist 2027
-            </NavLink>
-            <NavLink
-              to="/billetter"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? 'text-[#F79D1B] font-bold' : 'text-[#F3E9D2]')}
-            >
-              Billetter & reiser (Kassholmen Express)
-            </NavLink>
-            <NavLink
-              to="/kontakt"
-              onClick={() => setMenuOpen(false)}
-              className={({ isActive }) => (isActive ? 'text-[#F79D1B] font-bold' : 'text-[#F3E9D2]')}
-            >
-              Kontakt Roger Alræk (CEO)
-            </NavLink>
+        <div id="mobilmeny" className="xl:hidden fixed inset-x-0 top-[3.5rem] bottom-0 bg-blekk text-papir overflow-y-auto animate-fade-in">
+          <nav className="mx-auto max-w-7xl px-4 sm:px-6 py-8 flex flex-col" aria-label="Mobilmeny">
+            {[{ to: '/', tekst: 'Forsiden' }, ...lenker].map((l) => (
+              <NavLink
+                key={l.to}
+                to={l.to}
+                end={l.to === '/'}
+                className={({ isActive }) =>
+                  `t-tittel text-[2.25rem] py-3 border-b border-linje transition-colors ${isActive ? 'text-sol' : 'hover:text-sol-2'}`
+                }
+              >
+                {l.tekst}
+              </NavLink>
+            ))}
 
-            <div className="pt-2 border-t border-white/10 space-y-2">
-              <button
-                onClick={() => {
-                  setMenuOpen(false);
-                  onOpenVolunteer();
-                }}
-                className="text-left text-[#F3E9D2] hover:text-[#F79D1B] flex items-center gap-2"
-              >
-                <HeartHandshake className="w-4 h-4 text-[#F79D1B]" />
-                <span>Bli frivillig</span>
-              </button>
-              <button
-                onClick={() => {
-                  setMenuOpen(false);
-                  onOpenSponsor();
-                }}
-                className="text-left text-[#F3E9D2] hover:text-[#F79D1B] flex items-center gap-2"
-              >
-                <Briefcase className="w-4 h-4 text-[#F79D1B]" />
-                <span>Bli sponsor & partner</span>
-              </button>
-              <button
-                onClick={() => {
-                  setMenuOpen(false);
-                  onOpenVendor();
-                }}
-                className="text-left text-[#F3E9D2] hover:text-[#6EC1C6] flex items-center gap-2"
-              >
-                <Utensils className="w-4 h-4 text-[#6EC1C6]" />
-                <span>Selg mat & lokalt drikke</span>
+            <p className="t-merke text-take mt-10 mb-3">Bli med</p>
+            <div className="grid gap-2">
+              {blimed.map((b) => (
+                <button
+                  key={b.tekst}
+                  type="button"
+                  onClick={() => { setMenuOpen(false); b.onClick(); }}
+                  className="text-left rounded-lg border border-linje px-4 py-3 hover:border-sol cursor-pointer transition-colors"
+                >
+                  <span className="block font-semibold">{b.tekst}</span>
+                  <span className="block text-sm text-take">{b.hint}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/billetter" className="knapp knapp-sol">Billetter og reise</Link>
+              <button type="button" onClick={toggleAudio} aria-pressed={audioPlaying} className="knapp knapp-strek text-papir">
+                {audioPlaying ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+                {audioPlaying ? 'Havlyd på' : 'Havlyd av'}
               </button>
             </div>
-          </div>
-
-          <div className="pt-2 flex items-center justify-between">
-            <button
-              onClick={handleToggleAudio}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 text-xs text-white"
-            >
-              {audioPlaying ? (
-                <>
-                  <Volume2 className="w-4 h-4 text-[#F79D1B]" />
-                  <span>Kystlyd på</span>
-                </>
-              ) : (
-                <>
-                  <VolumeX className="w-4 h-4" />
-                  <span>Kystlyd av</span>
-                </>
-              )}
-            </button>
-
-            <button
-              onClick={() => {
-                setMenuOpen(false);
-                onOpenAuth();
-              }}
-              className="px-4 py-2 rounded-xl bg-white/10 text-white text-xs font-bold uppercase flex items-center gap-1.5"
-            >
-              <GithubIcon className="w-3.5 h-3.5 text-[#F79D1B]" />
-              <span>{user ? user.name.split(' ')[0] : 'Logg inn'}</span>
-            </button>
-          </div>
+          </nav>
         </div>
       )}
     </header>

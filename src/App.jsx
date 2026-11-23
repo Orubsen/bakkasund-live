@@ -73,7 +73,7 @@ export default function App() {
         <Route
           path="*"
           element={
-      <div className="min-h-screen bg-[#0D1B2A] text-[#F3E9D2] relative selection:bg-[#F79D1B] selection:text-[#0D1B2A] flex flex-col justify-between">
+      <div className="min-h-screen bg-blekk text-papir relative flex flex-col">
         <a href="#hovedinnhold" className="skip-link">Hopp til innholdet</a>
         {/* Navigation Bar */}
         <Navbar

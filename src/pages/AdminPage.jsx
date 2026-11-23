@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Upload, Download, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Upload, Download, ExternalLink, LayoutDashboard, ListChecks, Mic2, Handshake, Mail, Users, Settings as SettingsIcon } from 'lucide-react';
+import Wordmark from '../ui/Wordmark';
 import AdminGate from '../admin/AdminGate';
 import AdminChecklist, { itemStatus, relativeText } from '../admin/AdminChecklist';
 import AdminTemplates from '../admin/AdminTemplates';
@@ -12,20 +13,20 @@ import { CHECKLIST, CATEGORIES } from '../admin/checklistData';
 import { Button, Field, Panel, inputClass } from '../admin/ui';
 
 const TABS = [
-  { id: 'oversikt', label: 'Oversikt' },
-  { id: 'sjekkliste', label: 'Sjekkliste' },
-  { id: 'artister', label: 'Artister' },
-  { id: 'sponsorer', label: 'Sponsorer' },
-  { id: 'foresporsler', label: 'Forespørsler' },
-  { id: 'kontakter', label: 'Kontakter' },
-  { id: 'innstillinger', label: 'Innstillinger' },
+  { id: 'oversikt', label: 'Oversikt', icon: LayoutDashboard, desc: 'Frister, framdrift og status på kontakter fram mot festivalen.' },
+  { id: 'sjekkliste', label: 'Sjekkliste', icon: ListChecks, desc: 'Alt som må på plass, sortert etter frist.' },
+  { id: 'artister', label: 'Artister', icon: Mic2, desc: 'Bookinginfo og anslått honorar. Tallene er anslag, ikke tilbud.' },
+  { id: 'sponsorer', label: 'Sponsorer', icon: Handshake, desc: 'Aktuelle sponsorer og pakkene du kan tilby dem.' },
+  { id: 'foresporsler', label: 'Forespørsler', icon: Mail, desc: 'Skriv forespørsler fra maler og send dem fra din egen e-post.' },
+  { id: 'kontakter', label: 'Kontakter', icon: Users, desc: 'Alle du har vært i kontakt med, og hvor dialogen står.' },
+  { id: 'innstillinger', label: 'Innstillinger', icon: SettingsIcon, desc: 'Festivaldato, avsender og sikkerhetskopi av dataene.' },
 ];
 
 const dotTone = {
-  overdue: 'bg-[#ffb4a8]',
-  soon: 'bg-[#F79D1B]',
-  open: 'bg-[#F3E9D2]/45',
-  done: 'bg-[#6EC1C6]',
+  overdue: 'bg-korall',
+  soon: 'bg-sol',
+  open: 'bg-papir/45',
+  done: 'bg-sjo',
 };
 
 function Timeline({ rows, festivalDate }) {
@@ -40,24 +41,24 @@ function Timeline({ rows, festivalDate }) {
 
   return (
     <div aria-hidden="true" className="relative h-20 mt-2 select-none">
-      <div className="absolute left-0 right-0 top-9 h-px bg-[#2B4A63]" />
+      <div className="absolute left-0 right-0 top-9 h-px bg-linje-2" />
       {rows.map(({ item, status }) =>
         status.due ? (
           <span
             key={item.id}
             title={`${item.title}: ${formatDate(status.due)}`}
-            className={`absolute top-[31px] w-2.5 h-2.5 -ml-[5px] rounded-full ring-2 ring-[#13263A] ${dotTone[status.key]}`}
+            className={`absolute top-[31px] w-2.5 h-2.5 -ml-[5px] rounded-full ring-2 ring-dyp ${dotTone[status.key]}`}
             style={{ left: pos(status.due) }}
           />
         ) : null
       )}
       <div className="absolute top-0 bottom-0 flex flex-col items-center" style={{ left: pos(today) }}>
-        <span className="text-[12px] text-[#F3E9D2]/70 -translate-x-1/2 whitespace-nowrap">I dag</span>
-        <span className="w-px flex-1 bg-[#F3E9D2]/40 -translate-x-1/2" />
+        <span className="text-[12px] text-papir/70 -translate-x-1/2 whitespace-nowrap">I dag</span>
+        <span className="w-px flex-1 bg-papir/40 -translate-x-1/2" />
       </div>
       <div className="absolute top-0 bottom-0 flex flex-col items-center" style={{ left: pos(fest) }}>
-        <span className="text-[12px] font-semibold text-[#F79D1B] -translate-x-1/2 whitespace-nowrap">Festival</span>
-        <span className="w-0.5 flex-1 bg-[#F79D1B] -translate-x-1/2" />
+        <span className="text-[12px] font-semibold text-sol -translate-x-1/2 whitespace-nowrap">Festival</span>
+        <span className="w-0.5 flex-1 bg-sol -translate-x-1/2" />
       </div>
     </div>
   );
@@ -89,33 +90,33 @@ function Overview({ state, setTab }) {
       <Panel>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <p className="font-['Oswald'] text-white leading-none">
+            <p className="font-display text-white leading-none">
               <span className="text-6xl sm:text-7xl font-bold">{Number.isNaN(daysLeft) ? '–' : Math.max(daysLeft, 0)}</span>
-              <span className="text-2xl sm:text-3xl text-[#F3E9D2]/80 ml-3">dager til festivalen</span>
+              <span className="text-2xl sm:text-3xl text-papir/80 ml-3">dager til festivalen</span>
             </p>
-            <p className="text-[15px] text-[#F3E9D2]/70 mt-3">
+            <p className="text-[15px] text-papir/70 mt-3">
               Festivalstart {formatDate(fest)}.{' '}
-              <button type="button" onClick={() => setTab('innstillinger')} className="text-[#6EC1C6] hover:underline cursor-pointer">
+              <button type="button" onClick={() => setTab('innstillinger')} className="text-sjo hover:underline cursor-pointer">
                 Endre dato
               </button>
             </p>
           </div>
           <dl className="flex gap-8 text-[15px]">
             <div>
-              <dt className="text-[#F3E9D2]/60">Oppgaver ferdig</dt>
-              <dd className="font-['Oswald'] text-3xl text-white">
+              <dt className="text-papir/60">Oppgaver ferdig</dt>
+              <dd className="font-display text-3xl text-white">
                 {done}
-                <span className="text-[#F3E9D2]/50 text-xl"> av {rows.length}</span>
+                <span className="text-papir/50 text-xl"> av {rows.length}</span>
               </dd>
             </div>
             <div>
-              <dt className="text-[#F3E9D2]/60">Over fristen</dt>
-              <dd className={`font-['Oswald'] text-3xl ${overdue.length ? 'text-[#ffb4a8]' : 'text-white'}`}>{overdue.length}</dd>
+              <dt className="text-papir/60">Over fristen</dt>
+              <dd className={`font-display text-3xl ${overdue.length ? 'text-korall' : 'text-white'}`}>{overdue.length}</dd>
             </div>
           </dl>
         </div>
         <Timeline rows={rows} festivalDate={state.festivalDate} />
-        <p className="text-[13px] text-[#F3E9D2]/55">
+        <p className="text-[13px] text-papir/55">
           Hvert punkt er en frist i sjekklisten. Rosa er over fristen, oransje er innen tre uker, turkis er ferdig.
         </p>
       </Panel>
@@ -126,13 +127,13 @@ function Overview({ state, setTab }) {
           action={<Button variant="ghost" onClick={() => setTab('sjekkliste')}>Hele sjekklisten</Button>}
         >
           {upcoming.length === 0 ? (
-            <p className="text-[15px] text-[#F3E9D2]/70">Alt på sjekklisten er gjort.</p>
+            <p className="text-[15px] text-papir/70">Alt på sjekklisten er gjort.</p>
           ) : (
-            <ul className="divide-y divide-[#1E3A52]">
+            <ul className="divide-y divide-linje">
               {upcoming.map(({ item, status }) => (
                 <li key={item.id} className="py-3 flex items-start justify-between gap-4">
                   <span className="text-[15px] text-white">{item.title}</span>
-                  <span className={`text-[13px] whitespace-nowrap ${status.key === 'overdue' ? 'text-[#ffb4a8]' : status.key === 'soon' ? 'text-[#F79D1B]' : 'text-[#F3E9D2]/60'}`}>
+                  <span className={`text-[13px] whitespace-nowrap ${status.key === 'overdue' ? 'text-korall' : status.key === 'soon' ? 'text-sol' : 'text-papir/60'}`}>
                     {relativeText(status)}
                   </span>
                 </li>
@@ -149,13 +150,13 @@ function Overview({ state, setTab }) {
             <dl className="grid grid-cols-2 sm:grid-cols-3 gap-y-3 gap-x-4 text-[15px]">
               {STATUSES.map((s) => (
                 <div key={s.id}>
-                  <dt className="text-[13px] text-[#F3E9D2]/60">{s.label}</dt>
-                  <dd className={`font-['Oswald'] text-2xl ${s.tone}`}>{state.contacts.filter((c) => c.status === s.id).length}</dd>
+                  <dt className="text-[13px] text-papir/60">{s.label}</dt>
+                  <dd className={`font-display text-2xl ${s.tone}`}>{state.contacts.filter((c) => c.status === s.id).length}</dd>
                 </div>
               ))}
             </dl>
             {followUps.length > 0 && (
-              <p className="mt-4 text-[15px] text-[#F79D1B]">
+              <p className="mt-4 text-[15px] text-sol">
                 Følg opp i dag: {followUps.map((c) => c.name).join(', ')}.
               </p>
             )}
@@ -170,11 +171,11 @@ function Overview({ state, setTab }) {
                 return (
                   <li key={c.id}>
                     <div className="flex justify-between text-[14px] mb-1">
-                      <span className="text-[#F3E9D2]">{c.name}</span>
-                      <span className="text-[#F3E9D2]/60">{d} av {inCat.length}</span>
+                      <span className="text-papir">{c.name}</span>
+                      <span className="text-papir/60">{d} av {inCat.length}</span>
                     </div>
-                    <div className="h-1.5 rounded-full bg-[#0D1B2A]" role="progressbar" aria-label={c.name} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
-                      <div className="h-full rounded-full bg-[#6EC1C6]" style={{ width: `${pct}%` }} />
+                    <div className="h-1.5 rounded-full bg-blekk" role="progressbar" aria-label={c.name} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
+                      <div className="h-full rounded-full bg-sjo" style={{ width: `${pct}%` }} />
                     </div>
                   </li>
                 );
@@ -183,7 +184,7 @@ function Overview({ state, setTab }) {
           </Panel>
 
           <Panel title="Innsendte skjema">
-            <p className="text-[15px] leading-relaxed text-[#F3E9D2]/80">
+            <p className="text-[15px] leading-relaxed text-papir/80">
               Søknader fra sponsorer, frivillige, matleverandører og billettvarsel kommer inn i Netlify under Forms. Slå på
               e-postvarsling der, så får dere dem rett i innboksen.
             </p>
@@ -191,7 +192,7 @@ function Overview({ state, setTab }) {
               href="https://app.netlify.com/"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-[#6EC1C6] hover:underline mt-3"
+              className="inline-flex items-center gap-1.5 text-sm text-sjo hover:underline mt-3"
             >
               Åpne Netlify
               <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
@@ -261,7 +262,7 @@ function Settings({ state, update, replaceAll }) {
       </Panel>
 
       <Panel title="Lagring og deling" className="lg:col-span-2">
-        <p className="text-[15px] leading-relaxed text-[#F3E9D2]/80 max-w-[72ch]">
+        <p className="text-[15px] leading-relaxed text-papir/80 max-w-[72ch]">
           Alt du gjør her lagres bare i denne nettleseren. Last ned en fil for å ta sikkerhetskopi eller dele med de andre
           arrangørene, og last den inn på en annen maskin.
         </p>
@@ -276,7 +277,7 @@ function Settings({ state, update, replaceAll }) {
           </Button>
           <input ref={fileRef} type="file" accept="application/json,.json" onChange={importJson} className="hidden" />
         </div>
-        <p aria-live="polite" className="text-sm text-[#6EC1C6] mt-3 min-h-5">{msg}</p>
+        <p aria-live="polite" className="text-sm text-sjo mt-3 min-h-5">{msg}</p>
       </Panel>
     </div>
   );
@@ -304,45 +305,84 @@ function AdminApp() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D1B2A] text-[#F3E9D2]">
+    <div className="min-h-screen bg-blekk text-papir lg:grid lg:grid-cols-[16rem_1fr]">
       <a href="#admin-main" className="skip-link">Hopp til innholdet</a>
-      <header className="sticky top-0 z-40 bg-[#0D1B2A]/95 backdrop-blur border-b border-[#1E3A52]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 min-w-0">
-            <img src="/assets/logo.jpg" alt="" className="w-8 h-8 rounded-full border border-[#F79D1B]" />
-            <p className="font-['Oswald'] text-lg text-white truncate">
-              Bakkasund LIVE <span className="hidden sm:inline text-[#F3E9D2]/60 font-normal">arrangørpanel</span>
-            </p>
-          </div>
-          <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-[#6EC1C6] hover:underline shrink-0">
+
+      {/* Sidemeny på store skjermer */}
+      <aside className="hidden lg:flex flex-col sticky top-0 h-screen bg-natt border-r border-linje">
+        <div className="px-6 pt-7 pb-6">
+          <Wordmark tone="papir" />
+          <p className="mt-1 text-sm text-take">Arrangørpanel</p>
+        </div>
+        <nav aria-label="Arrangørpanel" className="flex-1 px-3">
+          <ul className="space-y-0.5">
+            {TABS.map((t) => {
+              const Icon = t.icon;
+              const aktiv = tab === t.id;
+              return (
+                <li key={t.id}>
+                  <button
+                    type="button"
+                    onClick={() => go(t.id)}
+                    aria-current={aktiv ? 'page' : undefined}
+                    className={`relative w-full flex items-center gap-3 rounded-md px-3 py-2.5 text-[15px] cursor-pointer transition-colors ${
+                      aktiv ? 'bg-dyp-2 text-papir font-semibold' : 'text-take hover:text-papir hover:bg-dyp'
+                    }`}
+                  >
+                    {aktiv && <span className="absolute left-0 top-2 bottom-2 w-0.5 rounded bg-sol" aria-hidden="true" />}
+                    <Icon className={`h-[18px] w-[18px] ${aktiv ? 'text-sol' : ''}`} aria-hidden="true" />
+                    {t.label}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+        <div className="p-6 border-t border-linje">
+          <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-take hover:text-papir">
             <ArrowLeft className="w-4 h-4" aria-hidden="true" />
             Til festivalsiden
           </Link>
         </div>
-        <nav aria-label="Arrangørpanel" className="max-w-6xl mx-auto px-4 sm:px-6 overflow-x-auto">
-          <ul className="flex gap-1 -mb-px">
-            {TABS.map((t) => (
-              <li key={t.id}>
-                <button
-                  type="button"
-                  onClick={() => go(t.id)}
-                  aria-current={tab === t.id ? 'page' : undefined}
-                  className={`px-3.5 py-3 text-[15px] whitespace-nowrap border-b-2 cursor-pointer ${
-                    tab === t.id ? 'border-[#F79D1B] text-white font-semibold' : 'border-transparent text-[#F3E9D2]/70 hover:text-white'
-                  }`}
-                >
-                  {t.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </header>
+      </aside>
 
-      <main id="admin-main" tabIndex={-1} className="max-w-6xl mx-auto px-4 sm:px-6 py-8 focus:outline-none">
-        <h1 className="sr-only">{TABS.find((t) => t.id === tab)?.label}</h1>
+      <div className="min-w-0">
+        {/* Topplinje og faner på små skjermer */}
+        <header className="lg:hidden sticky top-0 z-40 bg-natt/95 backdrop-blur border-b border-linje">
+          <div className="px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+            <Wordmark tone="papir" />
+            <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-take hover:text-papir shrink-0">
+              <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+              Festivalsiden
+            </Link>
+          </div>
+          <nav aria-label="Arrangørpanel" className="px-2 sm:px-4 overflow-x-auto">
+            <ul className="flex gap-1 -mb-px">
+              {TABS.map((t) => (
+                <li key={t.id}>
+                  <button
+                    type="button"
+                    onClick={() => go(t.id)}
+                    aria-current={tab === t.id ? 'page' : undefined}
+                    className={`px-3 py-3 text-[15px] whitespace-nowrap border-b-2 cursor-pointer ${
+                      tab === t.id ? 'border-sol text-papir font-semibold' : 'border-transparent text-take hover:text-papir'
+                    }`}
+                  >
+                    {t.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </header>
+
+      <main id="admin-main" tabIndex={-1} className="max-w-6xl px-4 sm:px-6 lg:px-10 py-8 lg:py-10 focus:outline-none">
+        <div className="mb-8 animate-fade-in" key={tab}>
+          <h1 className="t-tittel text-[2.25rem] sm:text-[2.75rem] text-papir">{TABS.find((t) => t.id === tab)?.label}</h1>
+          <p className="mt-2 text-take max-w-2xl">{TABS.find((t) => t.id === tab)?.desc}</p>
+        </div>
         {store.saveFailed && (
-          <p role="alert" className="mb-6 rounded-xl border border-[#ffb4a8]/40 bg-[#5a1d14]/40 px-4 py-3 text-[15px] text-[#ffb4a8]">
+          <p role="alert" className="mb-6 rounded-xl border border-korall/40 bg-korall/10 px-4 py-3 text-[15px] text-korall">
             Nettleseren tillater ikke lagring, så endringene forsvinner når du lukker siden. Slå av privat modus, eller last ned alt under Innstillinger.
           </p>
         )}
@@ -367,6 +407,7 @@ function AdminApp() {
         )}
         {tab === 'innstillinger' && <Settings state={store.state} update={store.update} replaceAll={store.replaceAll} />}
       </main>
+      </div>
     </div>
   );
 }

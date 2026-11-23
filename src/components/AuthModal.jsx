@@ -65,9 +65,8 @@ export default function AuthModal({ isOpen, onClose, user, onLogin, onLogout }) 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fade-in" role="dialog" aria-modal="true" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="relative w-full max-w-md bg-[#0D1B2A] border-2 border-[#F79D1B]/50 rounded-3xl p-6 sm:p-8 shadow-[0_20px_70px_rgba(0,0,0,0.9)] overflow-hidden" ref={dialogRef} tabIndex={-1}>
+      <div className="relative w-full max-w-md bg-blekk border-2 border-sol/50 rounded-2xl p-6 sm:p-8 shadow-[0_20px_70px_rgba(0,0,0,0.9)] overflow-hidden" ref={dialogRef} tabIndex={-1}>
         {/* Glow */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-[#F79D1B]/15 rounded-full blur-3xl pointer-events-none" />
 
         {/* Close Button */}
         <button
@@ -80,7 +79,7 @@ export default function AuthModal({ isOpen, onClose, user, onLogin, onLogout }) 
         {user ? (
           /* Logged In State */
           <div className="text-center space-y-5 pt-2">
-            <div className="relative w-20 h-20 mx-auto rounded-full overflow-hidden border-2 border-[#F79D1B] shadow-lg">
+            <div className="relative w-20 h-20 mx-auto rounded-full overflow-hidden border-2 border-sol shadow-lg">
               <img
                 src={user.avatar || 'https://github.com/Orubsen.png'}
                 alt={user.name}
@@ -89,26 +88,26 @@ export default function AuthModal({ isOpen, onClose, user, onLogin, onLogout }) 
                   e.target.src = 'https://avatars.githubusercontent.com/u/272911001?v=4';
                 }}
               />
-              <div className="absolute bottom-0 right-0 p-1 bg-[#F79D1B] rounded-full text-[#0D1B2A]">
+              <div className="absolute bottom-0 right-0 p-1 bg-sol rounded-full text-blekk">
                 <CheckCircle2 className="w-3.5 h-3.5" />
               </div>
             </div>
 
             <div>
-              <span className="px-3 py-1 rounded-full bg-[#F79D1B]/20 border border-[#F79D1B]/40 text-[#F79D1B] text-[10px] font-bold uppercase tracking-wider">
+              <span className="px-3 py-1 rounded-full bg-sol/20 border border-sol/40 text-sol text-[10px] font-bold uppercase tracking-wider">
                 Innlogget via {user.provider || 'GitHub'}
               </span>
-              <h3 className="font-['Oswald'] text-2xl font-bold uppercase text-white mt-2">
+              <h3 className="font-display text-2xl font-bold uppercase text-white mt-2">
                 {user.name}
               </h3>
-              <p className="text-xs text-[#6EC1C6]">
+              <p className="text-xs text-sjo">
                 {user.email || '@' + (user.username || 'festivalgjest')}
               </p>
             </div>
 
             <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-left space-y-2 text-xs">
               <div className="flex items-center justify-between text-white/80">
-                <span className="flex items-center gap-1.5 text-[#F79D1B]">
+                <span className="flex items-center gap-1.5 text-sol">
                   <Sparkles className="w-3.5 h-3.5" /> VIP Bakkasund Status:
                 </span>
                 <span className="font-bold text-white">Aktiv</span>
@@ -119,14 +118,14 @@ export default function AuthModal({ isOpen, onClose, user, onLogin, onLogout }) 
               </div>
               <div className="flex items-center justify-between text-white/80">
                 <span>Lagrede artiststemmer:</span>
-                <span className="font-bold text-[#6EC1C6]">Synkronisert</span>
+                <span className="font-bold text-sjo">Synkronisert</span>
               </div>
             </div>
 
             <Link
               to="/admin"
               onClick={onClose}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#F79D1B] text-[#0D1B2A] text-sm font-bold hover:brightness-110 transition-all"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-sol text-blekk text-sm font-bold  transition-all"
             >
               <ShieldCheck className="w-4 h-4" />
               <span>Åpne arrangørpanelet</span>
@@ -139,25 +138,25 @@ export default function AuthModal({ isOpen, onClose, user, onLogin, onLogout }) 
               }}
               className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
             >
-              <LogOut className="w-4 h-4 text-[#F79D1B]" />
+              <LogOut className="w-4 h-4 text-sol" />
               <span>Logg ut</span>
             </button>
           </div>
         ) : (
           /* Login Prompt */
           <div className="text-center space-y-6 pt-2">
-            <div className="w-14 h-14 mx-auto rounded-2xl bg-[#F79D1B]/15 border border-[#F79D1B]/30 flex items-center justify-center text-[#F79D1B]">
+            <div className="w-14 h-14 mx-auto rounded-2xl bg-sol/15 border border-sol/30 flex items-center justify-center text-sol">
               <GithubIcon className="w-7 h-7" />
             </div>
 
             <div>
-              <span className="font-['Caveat'] text-2xl text-[#F79D1B] block mb-1">
+              <span className="t-merke text-sol block mb-1">
                 Velkommen til Bakkasund LIVE
               </span>
-              <h3 className="font-['Oswald'] text-3xl font-bold uppercase text-white">
+              <h3 className="font-display text-3xl font-bold uppercase text-white">
                 Logg inn med GitHub
               </h3>
-              <p className="text-xs text-[#F3E9D2]/75 mt-2 leading-relaxed font-light">
+              <p className="text-xs text-papir/75 mt-2 leading-relaxed">
                 Autentiser sikkert igjennom Netlify via GitHub for å lagre artiststemmene dine, få 24t forsprang på festivalpass og VIP-fordeler.
               </p>
             </div>
@@ -165,14 +164,14 @@ export default function AuthModal({ isOpen, onClose, user, onLogin, onLogout }) 
             <button
               onClick={handleGitHubLogin}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 py-3.5 rounded-2xl bg-[#24292e] hover:bg-[#2f363d] border border-white/20 text-white font-bold text-xs uppercase tracking-wider shadow-xl transition-all cursor-pointer hover:scale-[1.02] disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-3 py-3.5 rounded-2xl bg-[#24292e] hover:bg-[#2f363d] border border-white/20 text-white font-bold text-xs uppercase tracking-wider shadow-xl transition-all cursor-pointer disabled:opacity-50"
             >
               <GithubIcon className="w-5 h-5" />
               <span>{loading ? 'Kobler til Netlify & GitHub...' : 'Fortsett med GitHub'}</span>
             </button>
 
             <div className="pt-2 text-[11px] text-white/50 flex items-center justify-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#6EC1C6]" />
+              <ShieldCheck className="w-3.5 h-3.5 text-sjo" />
               <span>Sikker innlogging med Netlify Identity & GitHub OAuth</span>
             </div>
           </div>

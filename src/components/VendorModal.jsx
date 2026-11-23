@@ -55,7 +55,7 @@ export default function VendorModal({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto" role="dialog" aria-modal="true" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="relative w-full max-w-2xl bg-[#0D1B2A] border-2 border-[#6EC1C6]/50 rounded-3xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9)] my-8" ref={dialogRef} tabIndex={-1}>
+      <div className="relative w-full max-w-2xl bg-blekk border-2 border-sjo/50 rounded-2xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.9)] my-8" ref={dialogRef} tabIndex={-1}>
         <button
           onClick={onClose} aria-label="Lukk" data-close
           className="absolute top-5 right-5 p-2 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/15 transition-colors cursor-pointer"
@@ -65,13 +65,13 @@ export default function VendorModal({ isOpen, onClose }) {
 
         {submitted ? (
           <div className="py-12 text-center space-y-4">
-            <div className="w-16 h-16 rounded-full bg-[#6EC1C6]/20 border-2 border-[#6EC1C6] flex items-center justify-center mx-auto text-[#6EC1C6]">
+            <div className="w-16 h-16 rounded-full bg-sjo/20 border-2 border-sjo flex items-center justify-center mx-auto text-sjo">
               <CheckCircle2 className="w-10 h-10 animate-bounce" />
             </div>
-            <h3 className="font-['Oswald'] text-3xl font-bold uppercase text-white">
+            <h3 className="font-display text-3xl font-bold uppercase text-white">
               Takk for søknaden, {formData.businessName}!
             </h3>
-            <p className="text-sm text-[#F3E9D2]/80 max-w-md mx-auto leading-relaxed">
+            <p className="text-sm text-papir/80 max-w-md mx-auto leading-relaxed">
               Vi brenner for å løfte frem det aller beste av lokal mat og drikke på Kassholmen.
               Roger Alræk og serveringsansvarlig vil kontakte dere på <strong className="text-white">{formData.email}</strong> for detaljer rundt serveringstelt, bevillinger og rigg.
             </p>
@@ -81,7 +81,7 @@ export default function VendorModal({ isOpen, onClose }) {
                   setSubmitted(false);
                   onClose();
                 }}
-                className="px-8 py-3 rounded-xl bg-[#F79D1B] text-[#0D1B2A] font-bold text-xs uppercase tracking-wider hover:brightness-110"
+                className="px-8 py-3 rounded-xl bg-sol text-blekk font-bold text-xs uppercase tracking-wider "
               >
                 Lukk vindu
               </button>
@@ -90,25 +90,25 @@ export default function VendorModal({ isOpen, onClose }) {
         ) : (
           <>
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-[#6EC1C6]/20 border border-[#6EC1C6]/40 flex items-center justify-center text-[#6EC1C6]">
+              <div className="w-10 h-10 rounded-xl bg-sjo/20 border border-sjo/40 flex items-center justify-center text-sjo">
                 <UtensilsCrossed className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-['Caveat'] text-xl text-[#F79D1B] block">Servering på Kassholmen</span>
-                <h3 className="font-['Oswald'] text-2xl sm:text-3xl font-bold uppercase text-white">
+                <span className="t-merke text-sol block">Servering på Kassholmen</span>
+                <h3 className="font-display text-2xl sm:text-3xl font-bold uppercase text-white">
                   Selg Mat & Drikke På Bakkasund LIVE
                 </h3>
               </div>
             </div>
 
-            <p className="text-xs text-[#F3E9D2]/80 mb-6">
+            <p className="text-xs text-papir/80 mb-6">
               Har du en matvogn, restaurant, lokalt mikrobryggeri, brenneri eller sideri? Vi reserverer egne telt og salgsboder ved inngangen og pubområdet for 600 sultne og tørste festivalgjester.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4 text-left">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                  <label className="block text-xs uppercase font-bold text-sjo mb-1">
                     Aktør- / Bedriftsnavn *
                   </label>
                   <input
@@ -117,12 +117,12 @@ export default function VendorModal({ isOpen, onClose }) {
                     placeholder="f.eks. Bakkasund Mat AS"
                     value={formData.businessName}
                     onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                  <label className="block text-xs uppercase font-bold text-sjo mb-1">
                     Kontaktperson *
                   </label>
                   <input
@@ -131,14 +131,14 @@ export default function VendorModal({ isOpen, onClose }) {
                     placeholder="Fornavn Etternavn"
                     value={formData.contactName}
                     onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                  <label className="block text-xs uppercase font-bold text-sjo mb-1">
                     E-post *
                   </label>
                   <input
@@ -147,12 +147,12 @@ export default function VendorModal({ isOpen, onClose }) {
                     placeholder="post@mataktør.no"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                  <label className="block text-xs uppercase font-bold text-sjo mb-1">
                     Telefon *
                   </label>
                   <input
@@ -161,13 +161,13 @@ export default function VendorModal({ isOpen, onClose }) {
                     placeholder="+47 000 00 000"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-2">
+                <label className="block text-xs uppercase font-bold text-sjo mb-2">
                   Kategori
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -180,14 +180,14 @@ export default function VendorModal({ isOpen, onClose }) {
                         onClick={() => setFormData({ ...formData, category: c.name })}
                         className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center gap-2.5 ${
                           isSelected
-                            ? 'bg-[#1E6070] border-[#F79D1B] text-white shadow-md'
+                            ? 'bg-fjord border-sol text-white shadow-md'
                             : 'bg-white/5 border-white/10 hover:bg-white/10 text-white/80'
                         }`}
                       >
-                        <Icon className={`w-4 h-4 shrink-0 ${isSelected ? 'text-[#F79D1B]' : 'text-[#6EC1C6]'}`} />
+                        <Icon className={`w-4 h-4 shrink-0 ${isSelected ? 'text-sol' : 'text-sjo'}`} />
                         <div>
                           <div className="text-xs font-bold leading-tight">{c.name}</div>
-                          <div className="text-[10px] text-[#F3E9D2]/70 leading-tight">{c.desc}</div>
+                          <div className="text-[10px] text-papir/70 leading-tight">{c.desc}</div>
                         </div>
                       </div>
                     );
@@ -196,7 +196,7 @@ export default function VendorModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                <label className="block text-xs uppercase font-bold text-sjo mb-1">
                   Beskrivelse av meny / drikkevarer
                 </label>
                 <textarea
@@ -204,12 +204,12 @@ export default function VendorModal({ isOpen, onClose }) {
                   placeholder="Hva vil dere servere festivalgjestene? Fortell om råvarer, signaturretter eller spesialbrygg..."
                   value={formData.menuHighlights}
                   onChange={(e) => setFormData({ ...formData, menuHighlights: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-xs uppercase font-bold text-[#6EC1C6] mb-1">
+                <label className="block text-xs uppercase font-bold text-sjo mb-1">
                   Krav til stand (strøm, telt, vann, båttransport)
                 </label>
                 <input
@@ -217,13 +217,13 @@ export default function VendorModal({ isOpen, onClose }) {
                   placeholder="f.eks. Trenger 16A enfas, eget 3x3m telt, transport av utstyr med Kassholmen Express"
                   value={formData.rigRequirements}
                   onChange={(e) => setFormData({ ...formData, rigRequirements: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-[#F79D1B] text-sm"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-sol text-sm"
                 />
               </div>
 
               <div className="pt-2 flex items-center justify-between">
                 <div className="text-[11px] text-white/60">
-                  Kontakt: <a href="mailto:roger.alraek@gmail.com" className="text-[#F79D1B]">roger.alraek@gmail.com</a>
+                  Kontakt: <a href="mailto:roger.alraek@gmail.com" className="text-sol">roger.alraek@gmail.com</a>
                 </div>
                 <div className="flex gap-2">
                   <button
@@ -236,14 +236,14 @@ export default function VendorModal({ isOpen, onClose }) {
                   <button
                     type="submit"
                     disabled={sending}
-                    className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#F79D1B] to-[#ffaa2b] text-[#0D1B2A] font-bold text-xs uppercase tracking-wider shadow-lg hover:brightness-110 cursor-pointer disabled:opacity-60 disabled:cursor-wait"
+                    className="px-6 py-2.5 rounded-xl bg-sol hover:bg-sol-2 text-blekk font-bold text-xs uppercase tracking-wider shadow-lg  cursor-pointer disabled:opacity-60 disabled:cursor-wait"
                   >
                     {sending ? 'Sender …' : 'Send søknad om stand'}
                   </button>
                 </div>
               </div>
               {sendError && (
-                <p role="alert" className="text-sm text-[#ffb4a8] bg-[#5a1d14]/40 border border-[#ffb4a8]/40 rounded-xl px-4 py-3">
+                <p role="alert" className="text-sm text-korall bg-[#5a1d14]/40 border border-korall/40 rounded-xl px-4 py-3">
                   {sendError}
                 </p>
               )}

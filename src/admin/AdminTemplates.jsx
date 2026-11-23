@@ -98,11 +98,11 @@ export default function AdminTemplates({ state, upsertContact, preset }) {
                   setEdited(false);
                 }}
                 className={`w-full text-left px-4 py-3 rounded-xl border cursor-pointer ${
-                  t.id === templateId ? 'border-[#F79D1B] bg-[#F79D1B]/10' : 'border-[#1E3A52] hover:border-[#2B4A63]'
+                  t.id === templateId ? 'border-sol bg-sol/10' : 'border-linje hover:border-linje-2'
                 }`}
               >
                 <span className="block text-[15px] font-semibold text-white">{t.name}</span>
-                <span className="block text-[13px] text-[#F3E9D2]/60 mt-0.5">{t.hint}</span>
+                <span className="block text-[13px] text-papir/60 mt-0.5">{t.hint}</span>
               </button>
             ))}
           </div>
@@ -169,7 +169,7 @@ export default function AdminTemplates({ state, upsertContact, preset }) {
           </Field>
 
           {missing && (
-            <p className="text-sm text-[#F79D1B]">
+            <p className="text-sm text-sol">
               Mangler fortsatt: {[...new Set(missing)].map((m) => m.slice(1, -1)).join(', ')}. Fyll inn feltene eller rett teksten.
             </p>
           )}
@@ -177,7 +177,7 @@ export default function AdminTemplates({ state, upsertContact, preset }) {
           <div className="flex flex-wrap gap-2">
             <a
               href={mailto}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm bg-[#F79D1B] text-[#0D1B2A] font-bold hover:brightness-110"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm bg-sol text-blekk font-bold "
             >
               <Mail className="w-4 h-4" aria-hidden="true" />
               Åpne i e-postprogrammet
@@ -191,10 +191,10 @@ export default function AdminTemplates({ state, upsertContact, preset }) {
               Logg som sendt
             </Button>
           </div>
-          <p className="text-[13px] text-[#F3E9D2]/55">
+          <p className="text-[13px] text-papir/55">
             Ingenting sendes herfra. E-posten åpnes som utkast i ditt eget e-postprogram, så du kan lese den over før du sender.
           </p>
-          <p aria-live="polite" className="text-sm text-[#6EC1C6] min-h-5 flex items-center gap-1.5">
+          <p aria-live="polite" className="text-sm text-sjo min-h-5 flex items-center gap-1.5">
             {feedback && <Check className="w-4 h-4" aria-hidden="true" />}
             {feedback}
           </p>
