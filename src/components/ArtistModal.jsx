@@ -1,15 +1,17 @@
 import React from 'react';
 import { X, Heart, Flame, ExternalLink, Music, Sparkles, CheckCircle2, Play } from 'lucide-react';
+import useModalA11y from '../hooks/useModalA11y';
 
 export default function ArtistModal({ artist, isOpen, onClose, onVote, hasVoted }) {
+  const dialogRef = useModalA11y(isOpen && !!artist, onClose);
   if (!isOpen || !artist) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl overflow-y-auto animate-fade-in">
-      <div className="relative w-full max-w-xl bg-[#0D1B2A] border-2 border-[#F79D1B]/50 rounded-3xl overflow-hidden shadow-[0_20px_70px_rgba(0,0,0,0.9)] my-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl overflow-y-auto animate-fade-in" role="dialog" aria-modal="true" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="relative w-full max-w-xl bg-[#0D1B2A] border-2 border-[#F79D1B]/50 rounded-3xl overflow-hidden shadow-[0_20px_70px_rgba(0,0,0,0.9)] my-6" ref={dialogRef} tabIndex={-1}>
         {/* Close Button */}
         <button
-          onClick={onClose}
+          onClick={onClose} aria-label="Lukk" data-close
           className="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />

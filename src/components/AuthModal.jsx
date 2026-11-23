@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { X, CheckCircle2, LogOut, ShieldCheck, Sparkles, User } from 'lucide-react';
+import useModalA11y from '../hooks/useModalA11y';
 import confetti from 'canvas-confetti';
+import { Link } from 'react-router-dom';
 
 function GithubIcon({ className = "w-5 h-5" }) {
   return (
@@ -13,6 +15,7 @@ function GithubIcon({ className = "w-5 h-5" }) {
 export default function AuthModal({ isOpen, onClose, user, onLogin, onLogout }) {
   const [loading, setLoading] = useState(false);
 
+  const dialogRef = useModalA11y(isOpen, onClose);
   if (!isOpen) return null;
 
   const handleGitHubLogin = () => {
@@ -61,14 +64,14 @@ export default function AuthModal({ isOpen, onClose, user, onLogin, onLogout }) 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fade-in">
-      <div className="relative w-full max-w-md bg-[#0D1B2A] border-2 border-[#F79D1B]/50 rounded-3xl p-6 sm:p-8 shadow-[0_20px_70px_rgba(0,0,0,0.9)] overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fade-in" role="dialog" aria-modal="true" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="relative w-full max-w-md bg-[#0D1B2A] border-2 border-[#F79D1B]/50 rounded-3xl p-6 sm:p-8 shadow-[0_20px_70px_rgba(0,0,0,0.9)] overflow-hidden" ref={dialogRef} tabIndex={-1}>
         {/* Glow */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-[#F79D1B]/15 rounded-full blur-3xl pointer-events-none" />
 
         {/* Close Button */}
         <button
-          onClick={onClose}
+          onClick={onClose} aria-label="Lukk" data-close
           className="absolute top-4 right-4 p-2.5 rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/15 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
@@ -119,6 +122,15 @@ export default function AuthModal({ isOpen, onClose, user, onLogin, onLogout }) 
                 <span className="font-bold text-[#6EC1C6]">Synkronisert</span>
               </div>
             </div>
+
+            <Link
+              to="/admin"
+              onClick={onClose}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#F79D1B] text-[#0D1B2A] text-sm font-bold hover:brightness-110 transition-all"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>Åpne arrangørpanelet</span>
+            </Link>
 
             <button
               onClick={() => {

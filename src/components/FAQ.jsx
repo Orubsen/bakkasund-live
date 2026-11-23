@@ -23,7 +23,7 @@ export default function FAQ() {
     },
     {
       q: 'Serveres det lokal mat og alkohol?',
-      a: 'Ja! Vi satser tungt på kortreist, vestlandsk mat – særlig fersk sjømat fra fjorden, grill og kvalitetsretter. Vi etablerer et eget 20-års barområde med lokalt håndverksøl, sider og brennevin fra vestlandske produsenter.',
+      a: 'Ja! Matområdet ved inngangen har flere boder med festivalmat, grill og lokale leverandører. Vi etablerer et eget 20-års barområde med lokalt håndverksøl, sider og brennevin fra vestlandske produsenter.',
     },
     {
       q: 'Hvordan melder jeg meg som frivillig eller sponsor?',
