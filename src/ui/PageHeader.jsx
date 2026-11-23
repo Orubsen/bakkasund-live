@@ -4,7 +4,7 @@ import Waves from './Waves';
   Sidetopp for undersidene. Papirflate med stor tittel, ingress og et bilde i ramme,
   avsluttet med bølgekanten ned i nattflaten der innholdet starter.
 */
-export default function PageHeader({ kicker, tittel, ingress, bilde, bildeAlt = '', children }) {
+export default function PageHeader({ kicker, tittel, ingress, bilde, bildeAlt = '', bildePosisjon = '', children }) {
   return (
     <header className="flate-papir pt-28 sm:pt-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid gap-10 lg:grid-cols-12 lg:items-end pb-10 sm:pb-14">
@@ -17,7 +17,7 @@ export default function PageHeader({ kicker, tittel, ingress, bilde, bildeAlt = 
         {bilde && (
           <div className="lg:col-span-5 inngang inngang-3">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-papir-3">
-              <img src={bilde} alt={bildeAlt} className="h-full w-full object-cover" loading="eager" />
+              <img src={bilde} alt={bildeAlt} className={`h-full w-full object-cover ${bildePosisjon}`} loading="eager" />
             </div>
           </div>
         )}

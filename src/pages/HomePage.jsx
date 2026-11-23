@@ -77,9 +77,9 @@ export default function HomePage({ onOpenVideo, onOpenVolunteer, onOpenSponsor, 
         </div>
         <figure className="lg:col-span-5">
           <img
-            src="/assets/kassholmen-real.jpg"
-            alt="Kassholmen med svaberg og hav rundt"
-            className="aspect-[4/5] w-full rounded-2xl object-cover"
+            src="/assets/kassholmen-drone.jpg"
+            alt="Kassholmen sett fra lufta, med de hvite husene og bryggen ute i sundet"
+            className="aspect-[4/3] w-full rounded-2xl object-cover"
             loading="lazy"
           />
           <figcaption className="mt-3 text-sm text-take">Kassholmen, Austevoll.</figcaption>
@@ -127,9 +127,9 @@ export default function HomePage({ onOpenVideo, onOpenVolunteer, onOpenSponsor, 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 grid gap-12 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-5">
             <img
-              src="/assets/roger-alraek-brygge.jpg"
-              alt="Roger Alræk på bryggen i Bakkasund"
-              className="aspect-[4/5] w-full rounded-2xl object-cover"
+              src="/assets/roger-alraek.jpg"
+              alt="Roger Alræk ute på holmene en solskinnsdag"
+              className="aspect-[4/5] w-full rounded-2xl object-cover object-top"
               loading="lazy"
             />
           </div>

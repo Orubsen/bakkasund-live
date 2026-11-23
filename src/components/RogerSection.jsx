@@ -49,7 +49,7 @@ export default function RogerSection() {
             {/* New Official Roger Alræk Poster Image */}
             <div className="relative rounded-2xl overflow-hidden mb-6 border-2 border-sol/40 shadow-2xl group">
               <img
-                src="/assets/roger-alraek-poster.jpg"
+                src="/assets/roger-alraek.jpg"
                 alt="Roger Alræk presenterer Bakkasund LIVE"
                 className="w-full h-auto object-cover transition-transform duration-500"
               />

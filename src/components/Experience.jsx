@@ -80,7 +80,7 @@ export default function Experience() {
           <div className="md:col-span-4 flex flex-col items-center text-center">
             <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-full overflow-hidden border-4 border-sol mb-4">
               <img
-                src="/assets/roger-alraek-2.jpg"
+                src="/assets/roger-alraek.jpg"
                 alt="Roger Alræk på Kassholmen"
                 className="w-full h-full object-cover object-top"
               />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Volume2, VolumeX, Menu, X, ChevronDown, UserRound } from 'lucide-react';
+import { Volume2, VolumeX, Menu, X, ChevronDown } from 'lucide-react';
 import { coastalAudio } from '../utils/audioSynth';
 import Wordmark from '../ui/Wordmark';
 
@@ -17,7 +17,7 @@ const lenker = [
   { to: '/kontakt', tekst: 'Kontakt' },
 ];
 
-export default function Navbar({ onOpenVolunteer, onOpenSponsor, onOpenVendor, user, onOpenAuth }) {
+export default function Navbar({ onOpenVolunteer, onOpenSponsor, onOpenVendor }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [audioPlaying, setAudioPlaying] = useState(false);
@@ -143,19 +143,6 @@ export default function Navbar({ onOpenVolunteer, onOpenSponsor, onOpenVendor, u
             {audioPlaying ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5 opacity-70" />}
           </button>
 
-          <button
-            type="button"
-            onClick={onOpenAuth}
-            aria-label={user ? `Innlogget som ${user.name}` : 'Logg inn'}
-            title={user ? user.name : 'Logg inn'}
-            className={`inline-flex ${ikonKnapp} cursor-pointer`}
-          >
-            {user?.avatar ? (
-              <img src={user.avatar} alt="" className="h-7 w-7 rounded-full ring-2 ring-sol object-cover" />
-            ) : (
-              <UserRound className="h-5 w-5" />
-            )}
-          </button>
 
           <Link to="/billetter" className={`hidden sm:inline-flex knapp knapp-liten ${mork ? 'knapp-sol' : 'knapp-blekk'}`}>
             Billetter
