@@ -45,7 +45,7 @@ export default function AuthModal({ isOpen, onClose, user, onLogin, onLogout }) 
       const mockUser = {
         name: 'Ruben Røsten',
         username: 'Orubsen',
-        email: 'orubsen1@gmail.com',
+        email: 'arrangor@bakkasund.live',
         avatar: 'https://github.com/Orubsen.png',
         provider: 'GitHub via Netlify',
         vip: true,
