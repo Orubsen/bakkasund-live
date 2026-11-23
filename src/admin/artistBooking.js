@@ -263,6 +263,17 @@ export const ARTIST_BOOKING = {
     angle: 'Lokal Bergens-artist. Tilby et godt tidspunkt og synlighet i markedsføringen. Han kan åpne festivalen.',
     caution: 'Telefonnummeret står i Brønnøysund-registeret for firmaet hans. Send gjerne en melding på Instagram først.',
   },
+  rubz: {
+    agency: 'Ingen byrå kjent. Artisten booker selv.',
+    contacts: [{ role: 'Artist', name: 'Ruben Røsten (RubZ / Røsten)', email: '', phone: '' }],
+    web: 'https://ffm.bio/rubz',
+    sources: ['https://urort.p3.no/artist/rubz', 'https://ffm.bio/rubz'],
+    size: 'lokal',
+    fee: [10000, 40000],
+    practical: ['Bor i Bergen, så reisen er kort. Kan trolig spille med DJ eller backingspor, og ta med gjesteartister som Leffe.'],
+    angle: 'Lokal Bergens-rapper med mange samarbeid. Fin som oppvarming, eller i et felles sett med Leffe («Hun Var Super»).',
+    caution: 'Honoraret er et anslag. Kontakt via Instagram (@orubsen) eller lenkesiden.',
+  },
   'baba-nation': {
     agency: 'Ikke kjent. Bandet har ikke vært aktivt siden rundt 2000, og har verken byrå eller egen nettside.',
     contacts: [{ role: 'Grunnlegger og gitarist', name: 'Jan Erik de Lange Gullaksen', email: '', phone: '' }],
