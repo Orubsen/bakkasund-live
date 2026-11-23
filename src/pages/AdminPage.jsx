@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Upload, Download, ExternalLink, LayoutDashboard, ListChecks, Mic2, Handshake, Mail, Users, Settings as SettingsIcon } from 'lucide-react';
 import Wordmark from '../ui/Wordmark';
+import InstallApp from '../admin/InstallApp';
 import AdminGate from '../admin/AdminGate';
 import AdminChecklist, { itemStatus, relativeText } from '../admin/AdminChecklist';
 import AdminTemplates from '../admin/AdminTemplates';
@@ -338,7 +339,8 @@ function AdminApp() {
             })}
           </ul>
         </nav>
-        <div className="p-6 border-t border-linje">
+        <div className="p-6 border-t border-linje space-y-4">
+          <InstallApp />
           <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-take hover:text-papir">
             <ArrowLeft className="w-4 h-4" aria-hidden="true" />
             Til festivalsiden
@@ -351,10 +353,13 @@ function AdminApp() {
         <header className="lg:hidden sticky top-0 z-40 bg-natt/95 backdrop-blur border-b border-linje">
           <div className="px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
             <Wordmark tone="papir" />
-            <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-take hover:text-papir shrink-0">
-              <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-              Festivalsiden
-            </Link>
+            <div className="flex items-center gap-2 shrink-0">
+              <InstallApp compact />
+              <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-take hover:text-papir">
+                <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+                Festivalsiden
+              </Link>
+            </div>
           </div>
           <nav aria-label="Arrangørpanel" className="px-2 sm:px-4 overflow-x-auto">
             <ul className="flex gap-1 -mb-px">

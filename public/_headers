@@ -2,3 +2,8 @@
   X-Robots-Tag: noindex, nofollow
 /admin/*
   X-Robots-Tag: noindex, nofollow
+/admin-sw.js
+  Cache-Control: no-cache
+  Service-Worker-Allowed: /admin
+/admin-app/manifest.webmanifest
+  Content-Type: application/manifest+json
