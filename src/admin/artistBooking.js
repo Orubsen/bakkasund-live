@@ -263,6 +263,25 @@ export const ARTIST_BOOKING = {
     angle: 'Lokal Bergens-artist. Tilby et godt tidspunkt og synlighet i markedsføringen. Han kan åpne festivalen.',
     caution: 'Telefonnummeret står i Brønnøysund-registeret for firmaet hans. Send gjerne en melding på Instagram først.',
   },
+  'baba-nation': {
+    agency: 'Ikke kjent. Bandet har ikke vært aktivt siden rundt 2000, og har verken byrå eller egen nettside.',
+    contacts: [{ role: 'Grunnlegger og gitarist', name: 'Jan Erik de Lange Gullaksen', email: '', phone: '' }],
+    web: 'https://en.wikipedia.org/wiki/Baba_Nation',
+    sources: [
+      'https://en.wikipedia.org/wiki/Baba_Nation',
+      'https://www.bt.no/kultur/i/dvyJX/naa-blir-det-baba-feber-igjen',
+      'https://www.bt.no/kultur/i/5E7G4K/baba-nation-var-bergens-stoerste-rockeband-plutselig-ble-det-stille',
+    ],
+    size: 'lokal',
+    fee: [40000, 100000],
+    practical: [
+      'Bergensband, så reisen er kort.',
+      'Gjenforente originalbesetningen for én konsert i 2014 (Matbørsen, Bergen). Ingen kjent aktivitet etter det.',
+      'Fullt band med trommer, bass, tangenter og blås. Planlegg for full backline.',
+    ],
+    angle: 'Tilby en gjenforening: «Baba Nation tilbake for én kveld, på en holme i havgapet». Nostalgien er salgsargumentet, og 90-tallspublikummet fra Bergen er målgruppen.',
+    caution: 'Ingen offentlig bookingkontakt. Gå via BT-journalisten bak 2025-saken, Villa Amorini-miljøet i Bergen eller medlemmene på sosiale medier. Honoraret er et grovt anslag for et gjenforent lokalband.',
+  },
 };
 
 export const SIZE_LABEL = {
