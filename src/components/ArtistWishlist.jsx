@@ -7,15 +7,55 @@ export const ARTISTS_DATA = [
   {
     id: 'vamp',
     name: 'Vamp',
-    genre: 'Kystmusikk / Viserock',
+    genre: 'Kystmusikk / Folkrock',
     category: 'Vestland & Kyst',
-    desc: 'Kystens desiderte konger. «Tir n’a Noir» og rå vestlandsstemning mens bølgene slår mot svabergene.',
-    facts: 'Vamp fra Haugesund er selve lyden av Vestlandet og Nordsjøen. Med poetiske tekster av Kolbein Falkeid og tidløse melodier av Øyvind Staveland, har de trollbundet Norge i over 30 år. Konserten deres på Kassholmen vil bli et historisk øyeblikk.',
-    hits: ['Tir n’a Noir', 'Liten Fuggel', 'Månemannen', 'Hallo - God morgen'],
+    desc: 'Kystens desiderte konger. «Tir n’a noir» og rå vestlandsstemning mens bølgene slår mot svabergene.',
+    background: 'Startet i Haugesund i 1990 rundt felespiller og låtskriver Øyvind Staveland. Debutalbumet «Godmorgen, søster» kom i 1993. I dag består bandet av Øyvind og Odin Staveland, Jan Toft, Kjetil Dalland og Lars Eirik Støle.',
+    musicStyle: 'Norsk folkemusikk møter rock: fele, trekkspill og fløyte under tekster fra Kolbein Falkeid og andre norske diktere. Musikken handler om havet, kysten og folka som bor der.',
+    facts: 'Vamp fra Haugesund er selve lyden av Vestlandet og Nordsjøen. Bandet har vunnet Spellemannprisen fem ganger, ble Årets Spellemann for «I full symfoni» med Kringkastingsorkesteret, og har solgt rundt én million plater. Albumene «Siste stikk» og «St. Mandag» gikk begge til topps i Norge. En konsert på Kassholmen, med havet rett bak scenen, er så nær Vamp-universet som det går an.',
+    hits: ['Tir n’a noir (2006)', 'På bredden (2008)', 'Liten fuggel (2012)', 'Onkel Holger (2017)', 'Godmorgen, søster (1993)'],
+    platforms: [
+      { name: 'Spotify', url: 'https://open.spotify.com/search/Vamp', color: 'bg-[#1DB954]/20 border-[#1DB954]/40 text-[#1DB954] hover:bg-[#1DB954]/30' },
+      { name: 'Apple Music', url: 'https://music.apple.com/artist/446771061', color: 'bg-[#FA243C]/20 border-[#FA243C]/40 text-[#FA586A] hover:bg-[#FA243C]/30' },
+      { name: 'YouTube', url: 'https://www.youtube.com/user/Vampmusikk/', color: 'bg-[#FF0000]/20 border-[#FF0000]/40 text-[#FF4E45] hover:bg-[#FF0000]/30' },
+      { name: 'Instagram', url: 'https://www.instagram.com/vampno/', color: 'bg-[#E1306C]/20 border-[#E1306C]/40 text-[#E1306C] hover:bg-[#E1306C]/30' },
+      { name: 'Facebook', url: 'https://www.facebook.com/vampno/', color: 'bg-[#1877F2]/20 border-[#1877F2]/40 text-[#6FA8FF] hover:bg-[#1877F2]/30' },
+      { name: 'Nettside', url: 'https://vamp.no/', color: 'bg-sol/15 border-sol/40 text-sol hover:bg-sol/25' },
+    ],
+    articles: [
+      { title: 'Vamp.no: Om bandet', url: 'https://vamp.no/om-vamp/' },
+      { title: 'Store norske leksikon: Vamp', url: 'https://snl.no/Vamp' },
+      { title: 'NRK Rogaland: Bjørn Berge blir ny Vamp-gitarist', url: 'https://www.nrk.no/rogaland/bjorn-berge-blir-ny-vamp-gitarist-1.12000709' },
+    ],
     votes: 382,
     status: 'I dialog',
     tag: 'Vestlandskonge',
     image: '/assets/artister/vamp.jpg',
+  },
+  {
+    id: 'baba-nation',
+    name: 'Baba Nation',
+    genre: 'Soul / Funk',
+    category: 'Vestland & Kyst',
+    desc: 'Bergens store soul- og funkband fra 90-tallet. «Too Bad» og «Ragamuffinmini» på en sommerkveld ved sjøen.',
+    background: 'Startet i Bergen i 1990 av gitarist Jan Erik de Lange Gullaksen, først under navnet Yee ’Ha Wanna Have A Baba. Fikk platekontrakt med Warner og byttet navn til Baba Nation i 1995. Med Erik Røe (vokal), Knut Hillersøy (tangenter) og Nicolai Hauan (bass).',
+    musicStyle: 'Svett soul og funk med tett groove, blås og en vokalist som tar hele rommet. Debuten «Love Express» (1996) og «B» (1999), produsert av David Eriksen, var lydsporet til Bergens uteliv på slutten av 90-tallet.',
+    facts: 'Baba Nation var et av Bergens største band på 90-tallet. «Too Bad» lå 17 uker på hitlistene, og konsertene var kjent for å være ville og grenseløse. Bandet tok pause rundt 2000 og samlet originalbesetningen for én kveld i 2014. En gjenforening på Kassholmen vil være noe helt spesielt for alle som var unge i Bergen på 90-tallet.',
+    hits: ['Too Bad (1999)', 'Ragamuffinmini (1996)', 'Time to Heal', 'Love Express (album, 1996)', 'B (album, 1999)'],
+    platforms: [
+      { name: 'Spotify', url: 'https://open.spotify.com/search/Baba%20Nation', color: 'bg-[#1DB954]/20 border-[#1DB954]/40 text-[#1DB954] hover:bg-[#1DB954]/30' },
+      { name: 'Apple Music', url: 'https://music.apple.com/no/search?term=Baba%20Nation', color: 'bg-[#FA243C]/20 border-[#FA243C]/40 text-[#FA586A] hover:bg-[#FA243C]/30' },
+      { name: 'YouTube', url: 'https://www.youtube.com/results?search_query=Baba+Nation+Too+Bad', color: 'bg-[#FF0000]/20 border-[#FF0000]/40 text-[#FF4E45] hover:bg-[#FF0000]/30' },
+    ],
+    articles: [
+      { title: 'Bergens Tidende: De var Bergens største band. Plutselig ble det stille. (2025)', url: 'https://www.bt.no/kultur/i/5E7G4K/baba-nation-var-bergens-stoerste-rockeband-plutselig-ble-det-stille' },
+      { title: 'Bergens Tidende: Nå blir det Baba-feber igjen (2014)', url: 'https://www.bt.no/kultur/i/dvyJX/naa-blir-det-baba-feber-igjen' },
+      { title: 'Wikipedia: Baba Nation', url: 'https://en.wikipedia.org/wiki/Baba_Nation' },
+    ],
+    votes: 204,
+    status: 'Ønskeliste',
+    tag: 'Bergens-comeback',
+    image: '/assets/artister/baba-nation.jpg',
   },
   {
     id: 'stavangerkameratene',
@@ -257,16 +297,20 @@ export const ARTISTS_DATA = [
 
 export default function ArtistWishlist() {
   const [artists, setArtists] = useState(() => {
+    // Lagrede stemmer slås sammen med dagens artistliste, så nye artister og nye fakta
+    // alltid vises, også for dem som har besøkt siden før.
     try {
-      const saved = localStorage.getItem('bakkasund_artists_v3');
-      if (saved) return JSON.parse(saved);
-      const v2 = localStorage.getItem('bakkasund_artists_v2');
-      if (v2) {
-        const parsedV2 = JSON.parse(v2);
-        return ARTISTS_DATA.map(a => {
-          const found = parsedV2.find(p => p.id === a.id);
+      const saved = JSON.parse(
+        localStorage.getItem('bakkasund_artists_v3') || localStorage.getItem('bakkasund_artists_v2') || 'null'
+      );
+      if (Array.isArray(saved)) {
+        const known = new Set(ARTISTS_DATA.map((a) => a.id));
+        const merged = ARTISTS_DATA.map((a) => {
+          const found = saved.find((p) => p.id === a.id);
           return found ? { ...a, votes: Math.max(a.votes, found.votes || 0) } : a;
         });
+        const forslag = saved.filter((p) => p && !known.has(p.id) && p.category === 'Publikumsforslag');
+        return [...forslag, ...merged];
       }
     } catch (e) {
       console.error(e);
