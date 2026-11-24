@@ -17,8 +17,8 @@ export default function ContactPage({ onOpenVolunteer, onOpenSponsor, onOpenVend
         tittel="Snakk med oss"
         ingress="Spørsmål om festivalen, artister, sponsing eller servering på Kassholmen? Skriv til Roger, så svarer vi så fort vi kan."
         bilde="/assets/roger-alraek.jpg"
-        bildeAlt="Roger Alræk ute på holmene en solskinnsdag"
-        bildePosisjon="object-[50%_30%]"
+        bildeAlt="Roger Alræk, grunnlegger og festivalleder"
+        bildePosisjon="object-[50%_22%]"
       />
 
       <RogerSection />

@@ -18,8 +18,8 @@ const destinasjoner = [
     tekst: 'Kart over Kassholmen med hovedscenen ved svaberget, kystbaren, matområdet og bryggen der båten legger til.',
     to: '/festivaloyen',
     lenke: 'Se kartet',
-    bilde: '/assets/festival-aerial-quay.jpg',
-    alt: 'Bryggen og holmen sett ovenfra',
+    bilde: '/assets/kassholmen-festivaloyen.jpg',
+    alt: 'Kassholmen med de røde takene og bryggen, sett fra lufta ute i sundet',
   },
   {
     tittel: 'Artister',
@@ -34,8 +34,9 @@ const destinasjoner = [
     tekst: 'Dagspass, helgepass og VIP. Båten over sundet er med i alle pass. Meld deg på varsel før salget starter.',
     to: '/billetter',
     lenke: 'Se billetter',
-    bilde: '/assets/wristband.jpg',
-    alt: 'Festivalarmbånd for Bakkasund Live',
+    bilde: '/assets/billetter.webp',
+    alt: 'To billetter til Bakkasund Live',
+    tilpass: true,
   },
 ];
 
@@ -77,9 +78,11 @@ export default function HomePage({ onOpenVideo, onOpenVolunteer, onOpenSponsor, 
         </div>
         <figure className="lg:col-span-5">
           <img
-            src="/assets/kassholmen-drone.jpg"
-            alt="Kassholmen sett fra lufta, med de hvite husene og bryggen ute i sundet"
-            className="aspect-[4/3] w-full rounded-2xl object-cover"
+            src="/assets/kassholmen-illustrasjon.jpg"
+            alt="Tegning av Kassholmen med de hvite husene, røde tak, flaggstang og bølger"
+            width="1536"
+            height="839"
+            className="h-auto w-full rounded-2xl"
             loading="lazy"
           />
           <figcaption className="mt-3 text-sm text-take">Kassholmen, Austevoll.</figcaption>
@@ -97,12 +100,12 @@ export default function HomePage({ onOpenVideo, onOpenVolunteer, onOpenSponsor, 
                 className="group grid gap-6 py-10 sm:py-14 md:grid-cols-12 md:items-center"
               >
                 <div className={`md:col-span-5 ${i % 2 ? 'md:order-2 md:col-start-8' : ''}`}>
-                  <div className="overflow-hidden rounded-xl bg-dyp aspect-[4/3]">
+                  <div className={`overflow-hidden rounded-xl aspect-[4/3] ${d.tilpass ? 'bg-papir' : 'bg-dyp'}`}>
                     <img
                       src={d.bilde}
                       alt={d.alt}
                       loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-700 ease-[var(--ease-expo)] group-hover:scale-[1.03]"
+                      className={`h-full w-full transition-transform ${d.tilpass ? 'object-contain p-6 sm:p-8' : 'object-cover'} duration-700 ease-[var(--ease-expo)] group-hover:scale-[1.03]`}
                     />
                   </div>
                 </div>
@@ -128,8 +131,10 @@ export default function HomePage({ onOpenVideo, onOpenVolunteer, onOpenSponsor, 
           <div className="lg:col-span-5">
             <img
               src="/assets/roger-alraek.jpg"
-              alt="Roger Alræk ute på holmene en solskinnsdag"
-              className="aspect-[4/5] w-full rounded-2xl object-cover object-top"
+              alt="Roger Alræk, grunnlegger og festivalleder"
+              width="1200"
+              height="1330"
+              className="h-auto w-full rounded-2xl"
               loading="lazy"
             />
           </div>
