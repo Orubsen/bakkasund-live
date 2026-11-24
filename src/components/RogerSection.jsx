@@ -50,12 +50,9 @@ export default function RogerSection() {
             <div className="relative rounded-2xl overflow-hidden mb-6 border-2 border-sol/40 shadow-2xl group">
               <img
                 src="/assets/roger-alraek.jpg"
-                alt="Roger Alræk presenterer Bakkasund LIVE"
+                alt="Roger Alræk, grunnlegger og festivalleder"
                 className="w-full h-auto object-cover transition-transform duration-500"
               />
-              <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-sol text-blekk text-[10px] font-bold uppercase tracking-wider shadow-lg">
-                CEO & Grunnlegger
-              </div>
             </div>
 
             <div className="flex items-center gap-2 mb-1">

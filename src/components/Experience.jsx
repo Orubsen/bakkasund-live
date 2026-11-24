@@ -81,8 +81,8 @@ export default function Experience() {
             <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-full overflow-hidden border-4 border-sol mb-4">
               <img
                 src="/assets/roger-alraek.jpg"
-                alt="Roger Alræk på Kassholmen"
-                className="w-full h-full object-cover object-top"
+                alt="Roger Alræk, grunnlegger og festivalleder"
+                className="w-full h-full object-cover object-[15%_28%] scale-[1.7] origin-[15%_28%]"
               />
             </div>
             <h4 className="font-display text-xl font-bold uppercase text-white">
